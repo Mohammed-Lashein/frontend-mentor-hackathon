@@ -21,3 +21,11 @@ The above introduction was a nice one though.
 Last couple of weeks, I was busy with a project for a [one month summer training provided by ministry of communications and Information Technology in Egypt](https://github.com/Mohammed-Lashein/ITI-frontend-1-month-summer-training), so I didn't have time to complete the weather app.  
 
 Since the training ended, now I have a one week to deliver the project. I am not sure if I can make it on time, but this is an opportunity that can't be missed. 
+_____
+### Importance of prototyping
+I have a separate local version of the project, where I experiment different approaches for doing almost everything (from styling, to writing logic, to fighthing TypeScript).  
+I remember an excerpt from Code Complete book that emphasizes the importance of prototyping in a non-production environment, with a non-production mindset in order to learn best from prototyping. 
+
+To find more, you can refer to Chapter 5: Design in construction -- Experimental Prototyping section.  
+
+That's why you may find a lot of commits batched in one day, but actually they took longer than that because I experiment in another local version of the project.
