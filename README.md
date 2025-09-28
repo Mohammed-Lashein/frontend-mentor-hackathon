@@ -16,3 +16,8 @@ After getting info from these tools, I ask them to tell me some resources to sea
 4. Finally, I try to follow principles from clean code, refactoring and code complete books. You will find me using principles from these books and mentioning them throught the journey
 
 Without further saying, Let's get started!
+____
+The above introduction was a nice one though.  
+Last couple of weeks, I was busy with a project for a [one month summer training provided by ministry of communications and Information Technology in Egypt](https://github.com/Mohammed-Lashein/ITI-frontend-1-month-summer-training), so I didn't have time to complete the weather app.  
+
+Since the training ended, now I have a one week to deliver the project. I am not sure if I can make it on time, but this is an opportunity that can't be missed. 
