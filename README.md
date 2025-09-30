@@ -26,6 +26,7 @@ _____
 # Table of contents
 - [Importance of prototyping](#importance-of-prototyping)
 - [Newer options for the `find` command](#newer-options-for-the-find-command)
+- [Why are asterisks turned into underscores?](#why-are-asterisks-turned-into-underscores)
 
 ### Importance of prototyping
 I have a separate local version of the project, where I experiment different approaches for doing almost everything (from styling, to writing logic, to fighthing TypeScript).  
@@ -157,3 +158,11 @@ Actually after reading carefully in the man page of `find`, I found this:
 > If an invalid or unsupported combination of `XY` is specified, a fatal error results.
 
 Although the documentation didn't have an explanation about why `X` can't be `t`. At least they documented that rule.
+_____
+### Why are asterisks turned into underscores? 
+On saving this markdown file, I noticed that the asterisks are changed into underscores on save. I asked claude and gemini about so, and they told me that this is a feature of prettier which can't be changed.  
+
+I searched the docs but couldn't find them. I asked claude why they didn't mention that in prettier docs, and he answered an amazing answer: 
+> Why It's Not in the Docs  
+Prettier's docs focus on available options. Since there's **no option to change this behavior** (it's hardcoded), they don't document it as a configurable feature. It's just part of how Prettier handles Markdown by design.
+If you want to keep your asterisks, disabling Prettier for Markdown files is really the cleanest solution.
