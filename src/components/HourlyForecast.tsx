@@ -1,5 +1,12 @@
 import React, { useState } from 'react'
-import iconDropdown from '../assets/images/icon-dropdown.svg'
+import iconDropdown from '@/assets/images/icon-dropdown.svg'
+import iconRain from '@/assets/images/icon-rain.webp'
+import iconDrizzle from '@/assets/images/icon-drizzle.webp'
+import iconSunny from '@/assets/images/icon-sunny.webp'
+import iconPartlyCloudy from '@/assets/images/icon-partly-cloudy.webp'
+import iconStorm from '@/assets/images/icon-storm.webp'
+import iconSnow from '@/assets/images/icon-snow.webp'
+import iconFog from '@/assets/images/icon-fog.webp'
 
 type TriggerButtonProps = {
 	selectedDay: string
@@ -80,10 +87,73 @@ function Header() {
 		</div>
 	)
 }
+function HourlyWeatherCard() {
+  return <div>HourlyWeatherCard</div>
+}
 function HourlyForecast() {
+	const dailyForecastData = [
+		{
+			time: '3 PM',
+			icon: iconRain,
+			temperature: '20°',
+		},
+		{
+			time: '3 PM',
+			icon: iconDrizzle,
+			temperature: '20°',
+		},
+		{
+			time: '3 PM',
+			icon: iconSunny,
+			temperature: '20°',
+		},
+		{
+			time: '3 PM',
+			icon: iconPartlyCloudy,
+			temperature: '20°',
+		},
+		{
+			time: '3 PM',
+			icon: iconStorm,
+			temperature: '20°',
+		},
+		{
+			time: '3 PM',
+			icon: iconSnow,
+			temperature: '20°',
+		},
+		{
+			time: '3 PM',
+			icon: iconFog,
+			temperature: '20°',
+		},
+		{
+			time: '3 PM',
+			icon: iconFog,
+			temperature: '20°',
+		},
+		{
+			time: '3 PM',
+			icon: iconFog,
+			temperature: '20°',
+		},
+		{
+			time: '3 PM',
+			icon: iconFog,
+			temperature: '20°',
+		},
+	]
+
 	return (
 		<div className='grow bg-neutral-800 p-300 rounded-20 relative'>
 			<Header />
+			<div className='hourly-weather-cards-container flex flex-col gap-200 overflow-scroll h-[630px] pt-2'>
+				{dailyForecastData.map((data, i) => (
+					<HourlyWeatherCard
+						key={i}
+					/>
+				))}
+			</div>
 		</div>
 	)
 }
