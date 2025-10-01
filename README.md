@@ -433,3 +433,32 @@ useEffect(() => {
 ```
 He told me that yes conditionally returning the cleanup function would lead to problems. To exactly quote from his answer: 
 >  Conditionally returning the cleanup function can cause React to lose track of cleanup and lead to memory leaks
+
+**Important update:** After trying the code, it didn't work 😅.
+On clicking outside the `UnitsDropdown` it didn't close. So I will implement a nice suggestion by claude which is **stop event propagation**: 
+```tsx
+// Somewhere in HourlyForecast.tsx file, in the DaysList component
+function DaysList({ days, selectedDay, setSetselectedDay, setIsDaysListOpen }: DaysListProps) {
+  return (
+    <div className='rounded-6 border border-neutral-600 bg-neutral-800 p-2 w-[13.75rem] absolute right-6 top-20'>
+      {days.map((day, i) => (
+        <button
+          className={`hover:bg-neutral-700 p-125 rounded-6 w-full text-left cursor-pointer ${
+            day === selectedDay ? 'bg-neutral-700' : ''
+          }`}
+          key={i}
+          onClick={(e) => {
+            // This is the key!
+            e.stopPropagation()
+            setSetselectedDay(days[i])
+            setIsDaysListOpen(false)
+          }}
+        >
+          {day}
+        </button>
+      ))}
+    </div>
+  )
+}
+```
+Now the intended functionality is working as expected. 
