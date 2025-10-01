@@ -64,7 +64,6 @@ function UnitsList() {
 			</button>
 			<div className='flex flex-col items-start pb-2 gap-50'>
 				<p className='Label text-sm text-neutral-500 px-2'>Temperature</p>
-				{/* p-1 px-3 */}
 				<button
 					className={`hover:bg-neutral-700  p-100 rounded-md w-full text-left cursor-pointer flex justify-between ${
 						temperatureUnit === 'celsius' && 'bg-neutral-700'
@@ -85,7 +84,6 @@ function UnitsList() {
 
 			<div className='flex flex-col items-start pb-2 gap-50'>
 				<p className='Label text-sm text-neutral-500 p-75'>WindSpeed</p>
-				{/* p-1 px-3 */}
 				<button
 					className={`hover:bg-neutral-700  p-100 rounded-md w-full text-left cursor-pointer flex justify-between ${
 						windSpeed === 'km/h' && 'bg-neutral-700'
@@ -107,7 +105,6 @@ function UnitsList() {
 
 			<div className='flex flex-col items-start pb-2 gap-50'>
 				<p className='Label text-sm text-neutral-500  p-75'>Precipitation</p>
-				{/* p-1 px-3 */}
 				<button
 					className={`hover:bg-neutral-700  p-100 rounded-md w-full text-left cursor-pointer flex justify-between ${
 						precipitation === 'mm' && 'bg-neutral-700'
@@ -127,9 +124,6 @@ function UnitsList() {
 			</div>
 		</div>
 	)
-	{
-		/*  */
-	}
 }
 
 function UnitsDropdown() {
