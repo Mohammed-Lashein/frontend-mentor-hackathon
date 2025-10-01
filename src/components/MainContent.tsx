@@ -3,7 +3,7 @@ import WeatherData from './WeatherData'
 
 function MainContent() {
 	return (
-		<div>
+		<div className='grid grid-cols-[2fr_1fr] pt-600 gap-8'>
 			<WeatherData />
 			<HourlyForecast />
 		</div>
