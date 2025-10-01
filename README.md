@@ -33,6 +33,7 @@ _____
 - [Using tailwind modified theme variables](#using-tailwind-modified-theme-variables)
 - [TypeScript errors on implementing click outside functionality](#typescript-errors-on-implementing-click-outside-functionality)
 - [Is `font-family` inherited by default?](#is-font-family-inherited-by-default)
+- [A tale of two dropdowns](#a-tale-of-two-dropdowns)
 
 ### Importance of prototyping
 I have a separate local version of the project, where I experiment different approaches for doing almost everything (from styling, to writing logic, to fighthing TypeScript).  
@@ -303,3 +304,132 @@ ____
 On working on the `WeatherCard` component, I wondered if our project-specific font should be explicitly inherited by each child element by calling `font-family: inherit`. But after asking claude, he told me that the `font-family` is inherited from the parent by default and there is no need to use `font-family: inherit`.  
 
 That makes sense, because in simple html/css projects, we were used to setting the `font-family` on just the `body` then every element in the page followed that font.  
+____
+### A tale of two dropdowns
+After finishing the `HourlyForecast` component, I was trying the app and I had the idea of opening the 2 dropdowns at the same time.  
+I found a gotcha (which means "a sudden unforeseen problem" in North American English, according to Oxford dictionary) where on selecting a day from the dropdown in the `HourlyForecast` component, the `UnitsDropdown` also closed although nobody closed it.  
+
+After reviewing the code of the "close on click outside functionality", I understood the problem: 
+```ts
+useEffect(() => {
+	function handleClickOutside(e: MouseEvent) {
+		const currentRef = unitsDropdownRef.current as HTMLElement
+		if (unitsDropdownRef.current && !unitsDropdownRef.current.contains(e.target as Node)) {
+			setIsUnitsListOpen(false)
+		}
+	}
+	if (isUnitsListOpen) {
+		document.addEventListener('click', handleClickOutside)
+	}
+	return () => {
+		document.removeEventListener('click', handleClickOutside)
+	}
+}, [isUnitsListOpen])
+```
+We are setting the event listener on the `document`, so any click will trigger it causing the dropdown to be closed!  
+
+What is the solution?  
+If we can just confine the event listener to the `unitsDropdownRef`... 🤔  
+Yes it is possible! 
+```ts
+useEffect(() => {
+	function handleClickOutside(e: MouseEvent) {
+		const currentRef = unitsDropdownRef.current as HTMLElement
+		if (unitsDropdownRef.current && !unitsDropdownRef.current.contains(e.target as Node)) {
+			setIsUnitsListOpen(false)
+		}
+	}
+	if (isUnitsListOpen) {
+    // Now the listener is added on the dropdown element itself!
+		unitsDropdownRef.current.addEventListener('click', handleClickOutside)
+	}
+	return () => {
+    // Now the listener is removed from the dropdown element itself!
+		unitsDropdownRef.current.addEventListener('click', handleClickOutside)
+	}
+}, [isUnitsListOpen])
+```
+Unfortunately, the above code showed squiggly lines under `unitsDropdownRef.current` saying: 
+> [!WARNING]
+> 'unitsDropdownRef.current' is possibly 'null'
+
+No problem, I will use non-null assertions: 
+```ts
+	useEffect(() => {
+		function handleClickOutside(e: MouseEvent) {
+			if (unitsDropdownRef.current && !unitsDropdownRef.current.contains(e.target as Node)) {
+				setIsUnitsListOpen(false)
+			}
+		}
+		if (isUnitsListOpen) {
+			unitsDropdownRef.current!.addEventListener('click', handleClickOutside)
+		}
+    return () => {
+        unitsDropdownRef.current!.removeEventListener('click', handleClickOutside)
+    }
+	}, [isUnitsListOpen])
+```
+Okay that worked (now TS is happy) 🙌, But now the **app crashed** with vite printing this error to the console: 
+> [!CAUTION]
+> Uncaught TypeError: Cannot read properties of null (reading 'removeEventListener')
+
+There should be a better solution.  
+```ts
+useEffect(() => {
+	function handleClickOutside(e: MouseEvent) {
+		if (unitsDropdownRef.current && !unitsDropdownRef.current.contains(e.target as Node)) {
+			setIsUnitsListOpen(false)
+		}
+	}
+			if (isUnitsListOpen && unitsDropdownRef !== null) { // check that unitsDropdownRef is not null
+		unitsDropdownRef.current.addEventListener('click', handleClickOutside)
+	}
+  return () => {
+    if(unitsDropdownRef) {
+      unitsDropdownRef.current.removeEventListener('click', handleClickOutside)
+    }
+  }
+}, [isUnitsListOpen])
+```
+Now TS is recomplaining: 
+> [!WARNING]
+> 'unitsDropdownRef.current' is possibly 'null'
+
+Maybe we should be more cautious: 
+```ts
+useEffect(() => {
+	function handleClickOutside(e: MouseEvent) {
+		if (unitsDropdownRef.current && !unitsDropdownRef.current.contains(e.target as Node)) {
+			setIsUnitsListOpen(false)
+		}
+	}
+	if (isUnitsListOpen && unitsDropdownRef !== null && unitsDropdownRef.current !== null) {
+		unitsDropdownRef.current.addEventListener('click', handleClickOutside)
+	}
+	return () => {
+		if (unitsDropdownRef.current) {
+			unitsDropdownRef.current.removeEventListener('click', handleClickOutside)
+		}
+	}
+}, [isUnitsListOpen])
+```
+Exactly! Now TS is sure that `unitsDropdownRef.current` will never be null when we add an event listener to it.  
+
+One last question: I tried another variation of the code which worked, but I asked claude if returning the cleanup function conditionally would affect the behavior of `useEffect`: 
+```ts
+useEffect(() => {
+	function handleClickOutside(e: MouseEvent) {
+		if (unitsDropdownRef.current && !unitsDropdownRef.current.contains(e.target as Node)) {
+			setIsUnitsListOpen(false)
+		}
+	}
+	if (isUnitsListOpen && unitsDropdownRef !== null && unitsDropdownRef.current !== null) {
+		unitsDropdownRef.current.addEventListener('click', handleClickOutside)
+	return () => {
+			unitsDropdownRef.current.removeEventListener('click', handleClickOutside)
+	}
+	}
+}, [isUnitsListOpen])
+```
+He told me that yes conditionally returning the cleanup function would lead to problems. To exactly quote from his answer: 
+>  Conditionally returning the cleanup function can cause React to lose track of cleanup and lead to memory leaks
