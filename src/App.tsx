@@ -1,4 +1,5 @@
 import Navbar from './components/Navbar'
+import SearchBox from './components/SearchBox';
 
 function App() {
 	return (
@@ -7,6 +8,7 @@ function App() {
 			<h1 className='text-white text-3xl pt-600 pb-800 text-center text-[3.25rem] font-bricolage'>
 				How's the sky looking today?{' '}
 			</h1>
+      <SearchBox />
 		</div>
 	)
 }
