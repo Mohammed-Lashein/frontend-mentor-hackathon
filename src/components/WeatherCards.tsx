@@ -21,8 +21,12 @@ function WeatherCards() {
 	]
 	return (
 		<div className='grid grid-cols-4 pt-400 gap-300'>
-			{dataForCards.map(({ label }) => (
-				<WeatherCard key={label} />
+			{dataForCards.map(({ label, value }) => (
+				<WeatherCard
+					label={label}
+					value={value}
+					key={label}
+				/>
 			))}
 		</div>
 	)
