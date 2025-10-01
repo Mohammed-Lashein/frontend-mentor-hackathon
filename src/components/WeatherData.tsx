@@ -1,4 +1,6 @@
 import iconSunny from '@/assets/images/icon-sunny.webp'
+import WeatherCards from './WeatherCards'
+import DailyForecastContainer from './DailyForecastContainer'
 function WeatherData() {
 	return (
 		<div>
@@ -19,6 +21,9 @@ function WeatherData() {
 					</div>
 				</div>
 			</div>
+
+      <WeatherCards />
+      <DailyForecastContainer />
 		</div>
 	)
 }
