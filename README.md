@@ -173,3 +173,12 @@ Note that in tailwind v4, (the config file is deprecated)[https://tailwindcss.co
 _____
 ### A nice article about `@font-face`
 I found a [nice article](https://css-tricks.com/snippets/css/using-font-face-in-css/) from css tricks that explains the `@font-face` we used in our `index.css` to apply the project's custom fonts.
+_____
+### React `setState` type
+This is my first time to write a type for react `setState` function: 
+```ts
+type TriggerButtonProps = {
+	setIsUnitsListOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+```
+I think that the type is a bit verbose, since I got it from vscode intellisense on hovering over the `setIsUnitsListOpen` function. I found that this syntax is mentioned in [react typescript cheatsheet](https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/basic_type_example#basic-prop-types-examples) (see the last example in the examples box)
