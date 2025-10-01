@@ -87,8 +87,27 @@ function Header() {
 		</div>
 	)
 }
-function HourlyWeatherCard() {
-  return <div>HourlyWeatherCard</div>
+
+type HourlyWeatherCardProps = {
+	icon: string
+	time: string
+	temperature: string
+}
+function HourlyWeatherCard({ icon, time, temperature }: HourlyWeatherCardProps) {
+	return (
+		<div className='border bg-neutral-700 border-neutral-600 pt-125 pr-200 pb-125 pl-150 font-dm-sans rounded-8 hover:bg-neutral-600'>
+			<div className='grid grid-cols-[auto_1fr_auto] gap-100 items-center'>
+				<div className='w-10 h-10 image-container'>
+					<img
+						src={icon}
+						alt='weather image icon'
+					/>
+				</div>
+				<p className='text-xl font-medium'>{time}</p>
+				<p>{temperature}</p>
+			</div>
+		</div>
+	)
 }
 function HourlyForecast() {
 	const dailyForecastData = [
