@@ -136,11 +136,13 @@ function UnitsDropdown() {
 				setIsUnitsListOpen(false)
 			}
 		}
-		if (isUnitsListOpen) {
+		if (isUnitsListOpen && unitsDropdownRef !== null && unitsDropdownRef.current !== null) {
 			document.addEventListener('click', handleClickOutside)
 		}
 		return () => {
-			document.removeEventListener('click', handleClickOutside)
+			if (unitsDropdownRef.current) {
+				document.removeEventListener('click', handleClickOutside)
+			}
 		}
 	}, [isUnitsListOpen])
 
