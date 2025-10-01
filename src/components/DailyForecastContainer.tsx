@@ -58,9 +58,13 @@ function DailyForecastContainer() {
 		<div className='pt-600'>
 			<h3 className='text-xl font-dm-sans font-semibold'>Daily forecast</h3>
 			<div className='flex gap-200 pt-250'>
-				{dailyForecastData.map((day, i) => (
+				{dailyForecastData.map(({ day, icon, maxTemperature, minTemperature }, i) => (
 					<DailyForecastCard
-						key={i} // I will change the key to be the day name since it is unique in a week
+						day={day}
+						icon={icon}
+						maxTemperature={maxTemperature}
+						minTemperature={minTemperature}
+						key={i} // I will change the key to be the day name since it is unique in a week when we get the data from the api
 					/>
 				))}
 			</div>
