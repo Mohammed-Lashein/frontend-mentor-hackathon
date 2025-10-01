@@ -184,7 +184,7 @@ _____
 This is my first time to write a type for react `setState` function: 
 ```ts
 type TriggerButtonProps = {
-	setIsUnitsListOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setIsUnitsListOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 ```
 I think that the type is a bit verbose, since I got it from vscode intellisense on hovering over the `setIsUnitsListOpen` function. I found that this syntax is mentioned in [react typescript cheatsheet](https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/basic_type_example#basic-prop-types-examples) (see the last example in the examples box)
@@ -196,7 +196,7 @@ _____
 Given this code snippet: 
 ```jsx
 function UnitsDropdown() {
-	const [isUnitsListOpen, setIsUnitsListOpen] = useState(true)
+  const [isUnitsListOpen, setIsUnitsListOpen] = useState(true)
     const unitsDropdownRef = useRef(null) 
 
     useEffect(() => {
@@ -223,7 +223,7 @@ Since initially we have assigned `unitsDropdownRef` a value of `null`, TS has in
 What is the solution then?  
 ```jsx
 function UnitsDropdown() {
-	const [isUnitsListOpen, setIsUnitsListOpen] = useState(true)
+  const [isUnitsListOpen, setIsUnitsListOpen] = useState(true)
     const unitsDropdownRef = useRef<null | HTMLElement>(null) // now TS inference works as expected
 }
 ```
@@ -236,7 +236,7 @@ But note that when we make the above change, another TS error will arise from th
 TS isn't sure that `e.target` will be of type **Node**, so let's assert it: 
 ```jsx
 function UnitsDropdown() {
-	const [isUnitsListOpen, setIsUnitsListOpen] = useState(true)
+  const [isUnitsListOpen, setIsUnitsListOpen] = useState(true)
     const unitsDropdownRef = useRef<null | HTMLElement>(null)
 
     useEffect(() => {
@@ -264,7 +264,7 @@ There is no guarantee that `e.target` will be of type `Node`, so we need to asse
 **Last weird TS error:**
 ```jsx
 function UnitsDropdown() {
-	const [isUnitsListOpen, setIsUnitsListOpen] = useState(true)
+  const [isUnitsListOpen, setIsUnitsListOpen] = useState(true)
     const unitsDropdownRef = useRef<null | HTMLDivElement>(null) 
 
     useEffect(() => {
@@ -312,18 +312,18 @@ I found a gotcha (which means "a sudden unforeseen problem" in North American En
 After reviewing the code of the "close on click outside functionality", I understood the problem: 
 ```ts
 useEffect(() => {
-	function handleClickOutside(e: MouseEvent) {
-		const currentRef = unitsDropdownRef.current as HTMLElement
-		if (unitsDropdownRef.current && !unitsDropdownRef.current.contains(e.target as Node)) {
-			setIsUnitsListOpen(false)
-		}
-	}
-	if (isUnitsListOpen) {
-		document.addEventListener('click', handleClickOutside)
-	}
-	return () => {
-		document.removeEventListener('click', handleClickOutside)
-	}
+  function handleClickOutside(e: MouseEvent) {
+    const currentRef = unitsDropdownRef.current as HTMLElement
+    if (unitsDropdownRef.current && !unitsDropdownRef.current.contains(e.target as Node)) {
+      setIsUnitsListOpen(false)
+    }
+  }
+  if (isUnitsListOpen) {
+    document.addEventListener('click', handleClickOutside)
+  }
+  return () => {
+    document.removeEventListener('click', handleClickOutside)
+  }
 }, [isUnitsListOpen])
 ```
 We are setting the event listener on the `document`, so any click will trigger it causing the dropdown to be closed!  
@@ -333,20 +333,20 @@ If we can just confine the event listener to the `unitsDropdownRef`... 🤔
 Yes it is possible! 
 ```ts
 useEffect(() => {
-	function handleClickOutside(e: MouseEvent) {
-		const currentRef = unitsDropdownRef.current as HTMLElement
-		if (unitsDropdownRef.current && !unitsDropdownRef.current.contains(e.target as Node)) {
-			setIsUnitsListOpen(false)
-		}
-	}
-	if (isUnitsListOpen) {
+  function handleClickOutside(e: MouseEvent) {
+    const currentRef = unitsDropdownRef.current as HTMLElement
+    if (unitsDropdownRef.current && !unitsDropdownRef.current.contains(e.target as Node)) {
+      setIsUnitsListOpen(false)
+    }
+  }
+  if (isUnitsListOpen) {
     // Now the listener is added on the dropdown element itself!
-		unitsDropdownRef.current.addEventListener('click', handleClickOutside)
-	}
-	return () => {
+    unitsDropdownRef.current.addEventListener('click', handleClickOutside)
+  }
+  return () => {
     // Now the listener is removed from the dropdown element itself!
-		unitsDropdownRef.current.addEventListener('click', handleClickOutside)
-	}
+    unitsDropdownRef.current.addEventListener('click', handleClickOutside)
+  }
 }, [isUnitsListOpen])
 ```
 Unfortunately, the above code showed squiggly lines under `unitsDropdownRef.current` saying: 
@@ -355,19 +355,19 @@ Unfortunately, the above code showed squiggly lines under `unitsDropdownRef.curr
 
 No problem, I will use non-null assertions: 
 ```ts
-	useEffect(() => {
-		function handleClickOutside(e: MouseEvent) {
-			if (unitsDropdownRef.current && !unitsDropdownRef.current.contains(e.target as Node)) {
-				setIsUnitsListOpen(false)
-			}
-		}
-		if (isUnitsListOpen) {
-			unitsDropdownRef.current!.addEventListener('click', handleClickOutside)
-		}
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (unitsDropdownRef.current && !unitsDropdownRef.current.contains(e.target as Node)) {
+        setIsUnitsListOpen(false)
+      }
+    }
+    if (isUnitsListOpen) {
+      unitsDropdownRef.current!.addEventListener('click', handleClickOutside)
+    }
     return () => {
         unitsDropdownRef.current!.removeEventListener('click', handleClickOutside)
     }
-	}, [isUnitsListOpen])
+  }, [isUnitsListOpen])
 ```
 Okay that worked (now TS is happy) 🙌, But now the **app crashed** with vite printing this error to the console: 
 > [!CAUTION]
@@ -376,14 +376,14 @@ Okay that worked (now TS is happy) 🙌, But now the **app crashed** with vite p
 There should be a better solution.  
 ```ts
 useEffect(() => {
-	function handleClickOutside(e: MouseEvent) {
-		if (unitsDropdownRef.current && !unitsDropdownRef.current.contains(e.target as Node)) {
-			setIsUnitsListOpen(false)
-		}
-	}
-			if (isUnitsListOpen && unitsDropdownRef !== null) { // check that unitsDropdownRef is not null
-		unitsDropdownRef.current.addEventListener('click', handleClickOutside)
-	}
+  function handleClickOutside(e: MouseEvent) {
+    if (unitsDropdownRef.current && !unitsDropdownRef.current.contains(e.target as Node)) {
+      setIsUnitsListOpen(false)
+    }
+  }
+      if (isUnitsListOpen && unitsDropdownRef !== null) { // check that unitsDropdownRef is not null
+    unitsDropdownRef.current.addEventListener('click', handleClickOutside)
+  }
   return () => {
     if(unitsDropdownRef) {
       unitsDropdownRef.current.removeEventListener('click', handleClickOutside)
@@ -398,19 +398,19 @@ Now TS is recomplaining:
 Maybe we should be more cautious: 
 ```ts
 useEffect(() => {
-	function handleClickOutside(e: MouseEvent) {
-		if (unitsDropdownRef.current && !unitsDropdownRef.current.contains(e.target as Node)) {
-			setIsUnitsListOpen(false)
-		}
-	}
-	if (isUnitsListOpen && unitsDropdownRef !== null && unitsDropdownRef.current !== null) {
-		unitsDropdownRef.current.addEventListener('click', handleClickOutside)
-	}
-	return () => {
-		if (unitsDropdownRef.current) {
-			unitsDropdownRef.current.removeEventListener('click', handleClickOutside)
-		}
-	}
+  function handleClickOutside(e: MouseEvent) {
+    if (unitsDropdownRef.current && !unitsDropdownRef.current.contains(e.target as Node)) {
+      setIsUnitsListOpen(false)
+    }
+  }
+  if (isUnitsListOpen && unitsDropdownRef !== null && unitsDropdownRef.current !== null) {
+    unitsDropdownRef.current.addEventListener('click', handleClickOutside)
+  }
+  return () => {
+    if (unitsDropdownRef.current) {
+      unitsDropdownRef.current.removeEventListener('click', handleClickOutside)
+    }
+  }
 }, [isUnitsListOpen])
 ```
 Exactly! Now TS is sure that `unitsDropdownRef.current` will never be null when we add an event listener to it.  
@@ -418,17 +418,17 @@ Exactly! Now TS is sure that `unitsDropdownRef.current` will never be null when 
 One last question: I tried another variation of the code which worked, but I asked claude if returning the cleanup function conditionally would affect the behavior of `useEffect`: 
 ```ts
 useEffect(() => {
-	function handleClickOutside(e: MouseEvent) {
-		if (unitsDropdownRef.current && !unitsDropdownRef.current.contains(e.target as Node)) {
-			setIsUnitsListOpen(false)
-		}
-	}
-	if (isUnitsListOpen && unitsDropdownRef !== null && unitsDropdownRef.current !== null) {
-		unitsDropdownRef.current.addEventListener('click', handleClickOutside)
-	return () => {
-			unitsDropdownRef.current.removeEventListener('click', handleClickOutside)
-	}
-	}
+  function handleClickOutside(e: MouseEvent) {
+    if (unitsDropdownRef.current && !unitsDropdownRef.current.contains(e.target as Node)) {
+      setIsUnitsListOpen(false)
+    }
+  }
+  if (isUnitsListOpen && unitsDropdownRef !== null && unitsDropdownRef.current !== null) {
+    unitsDropdownRef.current.addEventListener('click', handleClickOutside)
+  return () => {
+      unitsDropdownRef.current.removeEventListener('click', handleClickOutside)
+  }
+  }
 }, [isUnitsListOpen])
 ```
 He told me that yes conditionally returning the cleanup function would lead to problems. To exactly quote from his answer: 
