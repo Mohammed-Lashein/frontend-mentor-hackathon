@@ -1,5 +1,6 @@
 /* tailwind config... to be added */
-@import "tailwindcss"
+@import "tailwindcss";
+@import "./fonts.css";
 
 @theme {
   /* overriden styles to match the project design -- start */
@@ -38,6 +39,13 @@
   --radius-10: 10px;
   --radius-12: 12px;
   --radius-20: 20px;
+
+  /* ff */
+  --font-bricolage: "Bricolage Grotesque", "serif";
+  /*I am adding serif as a fallback font because it is
+  visually different from the target fonts, so any error in fonts importing will be visible since the font
+  style is visually different*/
+  --font-dm-sans: "DM Sans", "serif";
 
   /* overriden styles to match the project design -- end */
 }
