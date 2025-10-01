@@ -44,7 +44,8 @@ function DaysList({ days, selectedDay, setSetselectedDay, setIsDaysListOpen }: D
 						day === selectedDay ? 'bg-neutral-700' : ''
 					}`}
 					key={i}
-					onClick={() => {
+					onClick={(e) => {
+            e.stopPropagation()
 						setSetselectedDay(days[i])
 						setIsDaysListOpen(false)
 					}}
