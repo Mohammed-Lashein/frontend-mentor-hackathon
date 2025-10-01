@@ -170,3 +170,6 @@ If you want to keep your asterisks, disabling Prettier for Markdown files is rea
 _____
 ### Regarding modifying tailwind theme variables
 Note that in tailwind v4, (the config file is deprecated)[https://tailwindcss.com/docs/upgrade-guide#using-a-javascript-config-file]. We should modify the `theme` layer directly instead.
+_____
+### A nice article about `@font-face`
+I found a [nice article](https://css-tricks.com/snippets/css/using-font-face-in-css/) from css tricks that explains the `@font-face` we used in our `index.css` to apply the project's custom fonts.
