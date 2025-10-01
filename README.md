@@ -295,3 +295,5 @@ Type 'Event' is missing the following properties from type 'MouseEvent<Element, 
 
 After asking claude, he told me that because the function expects to be invoked with a DOM native `MouseEvent` not a synthetic `React.MouseEvent`.
 _____
+### Using a favicon
+W3schools has [an article](https://www.w3schools.com/html/html_favicon.asp) that explains how to use a favicon. 
