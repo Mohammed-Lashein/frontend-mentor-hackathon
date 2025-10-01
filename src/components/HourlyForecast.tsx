@@ -22,6 +22,32 @@ function TriggerButton({ setIsDaysListOpen, selectedDay }: TriggerButtonProps) {
 		</button>
 	)
 }
+type DaysListProps = {
+	days: string[]
+	selectedDay: string
+	setSetselectedDay: React.Dispatch<React.SetStateAction<string>>
+	setIsDaysListOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+function DaysList({ days, selectedDay, setSetselectedDay, setIsDaysListOpen }: DaysListProps) {
+	return (
+		<div className='rounded-6 border border-neutral-600 bg-neutral-800 p-2 w-[13.75rem] absolute right-6 top-20'>
+			{days.map((day, i) => (
+				<button
+					className={`hover:bg-neutral-700 p-125 rounded-6 w-full text-left cursor-pointer ${
+						day === selectedDay ? 'bg-neutral-700' : ''
+					}`}
+					key={i}
+					onClick={() => {
+						setSetselectedDay(days[i])
+						setIsDaysListOpen(false)
+					}}
+				>
+					{day}
+				</button>
+			))}
+		</div>
+	)
+}
 
 function DaysDropdown() {
 	const [isDaysListOpen, setIsDaysListOpen] = useState(false)
@@ -34,7 +60,14 @@ function DaysDropdown() {
 				setIsDaysListOpen={setIsDaysListOpen}
 				selectedDay={selectedDay}
 			/>
-			{/* DayListComponent... to do */}
+			{isDaysListOpen && (
+				<DaysList
+					days={days}
+					selectedDay={selectedDay}
+					setSetselectedDay={setSetselectedDay}
+					setIsDaysListOpen={setIsDaysListOpen}
+				/>
+			)}
 		</div>
 	)
 }
