@@ -31,6 +31,7 @@ _____
 - [css `font-face` directive explained](#a-nice-article-about-font-face)
 - [React `setState` type](#react-setstate-type)
 - [Using tailwind modified theme variables](#using-tailwind-modified-theme-variables)
+- [TypeScript errors on implementing click outside functionality](#typescript-errors-on-implementing-click-outside-functionality)
 
 ### Importance of prototyping
 I have a separate local version of the project, where I experiment different approaches for doing almost everything (from styling, to writing logic, to fighthing TypeScript).  
@@ -188,3 +189,109 @@ I think that the type is a bit verbose, since I got it from vscode intellisense 
 ____
 ### Using tailwind modified theme variables
 The variables we declared in `index.css` like `--spacing-*` can be used directly like `p-600` instead of manually writing `p-[var(--spacing-600)]`. It is amazing that tailwind makes design customization so easy!
+_____
+### TypeScript errors on implementing click outside functionality
+Given this code snippet: 
+```jsx
+function UnitsDropdown() {
+	const [isUnitsListOpen, setIsUnitsListOpen] = useState(true)
+    const unitsDropdownRef = useRef(null) 
+
+    useEffect(() => {
+      function handleClickOutside(e: React.MouseEvent) {
+        if(unitsDropdownRef.current && !unitsDropdownRef.current.contains(e.target)) {
+          setIsUnitsListOpen(false)
+        }
+      }
+      if(isUnitsListOpen) {
+        document.addEventListener('click', handleClickOutside)
+      }
+      return () => {
+        document.removeEventListener('click', handleClickOutside)
+      }
+    }, [isUnitsListOpen])
+}
+```
+The `contains()` method has squiggly lines below it and a TS error: 
+> [!WARNING]
+> Property 'contains' does not exist on type 'never'
+
+I am accustomed to assigning a default value to  `useRef()` as `null`. What is wrong with TS?  
+Since initially we have assigned `unitsDropdownRef` a value of `null`, TS has inferred that `unitsDropdownRef.current` will always have a value of `null`.  
+What is the solution then?  
+```jsx
+function UnitsDropdown() {
+	const [isUnitsListOpen, setIsUnitsListOpen] = useState(true)
+    const unitsDropdownRef = useRef<null | HTMLElement>(null) // now TS inference works as expected
+}
+```
+
+But note that when we make the above change, another TS error will arise from the `e.target` part: 
+> [!WARNING]
+> Argument of type 'EventTarget' is not assignable to parameter of type 'Node'.
+  Type 'EventTarget' is missing the following properties from type 'Node': baseURI, childNodes, firstChild, isConnected, and 43 more
+
+TS isn't sure that `e.target` will be of type **Node**, so let's assert it: 
+```jsx
+function UnitsDropdown() {
+	const [isUnitsListOpen, setIsUnitsListOpen] = useState(true)
+    const unitsDropdownRef = useRef<null | HTMLElement>(null)
+
+    useEffect(() => {
+      function handleClickOutside(e: React.MouseEvent) {
+        if(unitsDropdownRef.current && !unitsDropdownRef.current.contains(e.target as Node)) { // The assertion that TS wanted
+          setIsUnitsListOpen(false)
+        }
+      }
+      if(isUnitsListOpen) {
+        document.addEventListener('click', handleClickOutside)
+      }
+      return () => {
+        document.removeEventListener('click', handleClickOutside)
+      }
+    }, [isUnitsListOpen])
+}
+```
+Why did the error occur in the first place?  
+~~Since `e.target` is typed as `EventTarget | null`, we need to assert `contains()` method that `e.target` is a Node.~~
+The above line was claude's explanation. But on looking into the generated TS code, it is a bit explicit: 
+> Argument of type 'EventTarget' is not assignable to parameter of type 'Node'.  
+
+There is no guarantee that `e.target` will be of type `Node`, so we need to assert TS about so.
+
+**Last weird TS error:**
+```jsx
+function UnitsDropdown() {
+	const [isUnitsListOpen, setIsUnitsListOpen] = useState(true)
+    const unitsDropdownRef = useRef<null | HTMLDivElement>(null) 
+
+    useEffect(() => {
+      function handleClickOutside(e: React.MouseEvent) {
+        const currentRef = unitsDropdownRef.current as HTMLElement
+        if(unitsDropdownRef.current && !unitsDropdownRef.current.contains(e.target as Node)) {
+          setIsUnitsListOpen(false)
+        }
+      }
+      if(isUnitsListOpen) {
+        document.addEventListener('click', handleClickOutside) // squiggly lines below the function name
+      }
+      return () => {
+        document.removeEventListener('click', handleClickOutside) // and here also
+      }
+    }, [isUnitsListOpen])
+}
+```
+And the error doesn't make sense to me (except the 1st line): 
+> No overload matches this call.  
+Overload 1 of 2, '(type: "click", listener: (this: Document, ev: PointerEvent) => any, options?: boolean | AddEventListenerOptions | undefined): void', gave the following error.
+Argument of type '(e: MouseEvent<Element, MouseEvent>) => void' is not assignable to parameter of type '(this: Document, ev: PointerEvent) => any'.
+Types of parameters 'e' and 'ev' are incompatible.
+Type 'PointerEvent' is missing the following properties from type 'MouseEvent<Element, MouseEvent>': nativeEvent, isDefaultPrevented, isPropagationStopped, persist
+Overload 2 of 2, '(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions | undefined): void', gave the following error.
+Argument of type '(e: MouseEvent<Element, MouseEvent>) => void' is not assignable to parameter of type 'EventListenerOrEventListenerObject'.
+Type '(e: MouseEvent<Element, MouseEvent>) => void' is not assignable to type 'EventListener'.
+Types of parameters 'e' and 'evt' are incompatible.
+Type 'Event' is missing the following properties from type 'MouseEvent<Element, MouseEvent>': altKey, button, buttons, clientX, and 18 more.
+
+After asking claude, he told me that because the function expects to be invoked with a DOM native `MouseEvent` not a synthetic `React.MouseEvent`.
+_____
