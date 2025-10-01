@@ -36,10 +36,30 @@ function UnitsList() {
 	const [temperatureUnit, setTemperatureUnit] = useState('celsius')
 	const [windSpeed, setWindSpeed] = useState('km/h')
 	const [precipitation, setPrecipitation] = useState('mm')
+	const [currentMeasurementSystem, setCurrentMeasurementSystem] = useState<'metric' | 'imperial'>('metric')
+
+	function toggleCurrentMeasurementSystem() {
+		if (currentMeasurementSystem === 'metric') {
+			// change to imperial
+			setCurrentMeasurementSystem('imperial')
+			setTemperatureUnit('fahrenheit')
+			setWindSpeed('mph')
+			setPrecipitation('in')
+		} else {
+			// change to metric
+			setCurrentMeasurementSystem('metric')
+			setTemperatureUnit('celsius')
+			setWindSpeed('km/h')
+			setPrecipitation('mm')
+		}
+	}
 
 	return (
 		<div className='rounded-md border border-neutral-600 bg-neutral-800 p-2 w-[13.75rem] absolute top-[3.5rem]'>
-			<button className='hover:bg-neutral-700 p-125 rounded-md w-full text-left cursor-pointer'>
+			<button
+				className='hover:bg-neutral-700 p-125 rounded-md w-full text-left cursor-pointer'
+				onClick={() => toggleCurrentMeasurementSystem()}
+			>
 				Switch to {'imperial'}
 			</button>
 			<div className='flex flex-col items-start pb-2 gap-50'>
