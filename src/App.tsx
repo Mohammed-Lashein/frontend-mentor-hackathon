@@ -1,3 +1,4 @@
+import MainContent from './components/MainContent';
 import Navbar from './components/Navbar'
 import SearchBox from './components/SearchBox';
 
@@ -9,6 +10,7 @@ function App() {
 				How's the sky looking today?{' '}
 			</h1>
       <SearchBox />
+      <MainContent />
 		</div>
 	)
 }
