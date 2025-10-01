@@ -56,7 +56,7 @@ function UnitsList() {
 					className={`hover:bg-neutral-700  p-[var(--spacing-100)] rounded-md w-full text-left cursor-pointer flex justify-between ${
 						temperatureUnit === 'fahrenheit' && 'bg-neutral-700'
 					}`}
-					onClick={(e) => setTemperatureUnit('fahrenheit')}
+					onClick={() => setTemperatureUnit('fahrenheit')}
 				>
 					Fahrenheit (°F) {temperatureUnit === 'fahrenheit' && <img src={checkmarkIcon} />}
 				</button>
@@ -70,7 +70,7 @@ function UnitsList() {
 					className={`hover:bg-neutral-700  p-[var(--spacing-100)] rounded-md w-full text-left cursor-pointer flex justify-between ${
 						windSpeed === 'km/h' && 'bg-neutral-700'
 					}`}
-					onClick={(e) => setWindSpeed('km/h')}
+					onClick={() => setWindSpeed('km/h')}
 				>
 					km/h {windSpeed === 'km/h' && <img src={checkmarkIcon} />}
 				</button>
@@ -78,7 +78,7 @@ function UnitsList() {
 					className={`hover:bg-neutral-700  p-[var(--spacing-100)] rounded-md w-full text-left cursor-pointer flex justify-between ${
 						windSpeed === 'mph' && 'bg-neutral-700'
 					}`}
-					onClick={(e) => setWindSpeed('mph')}
+					onClick={() => setWindSpeed('mph')}
 				>
 					mph {windSpeed === 'mph' && <img src={checkmarkIcon} />}
 				</button>
@@ -92,7 +92,7 @@ function UnitsList() {
 					className={`hover:bg-neutral-700  p-[var(--spacing-100)] rounded-md w-full text-left cursor-pointer flex justify-between ${
 						precipitation === 'mm' && 'bg-neutral-700'
 					}`}
-					onClick={(e) => setPrecipitation('mm')}
+					onClick={() => setPrecipitation('mm')}
 				>
 					Millimeters (mm) {precipitation === 'mm' && <img src={checkmarkIcon} />}
 				</button>
@@ -100,7 +100,7 @@ function UnitsList() {
 					className={`hover:bg-neutral-700  p-[var(--spacing-100)] rounded-md w-full text-left cursor-pointer flex justify-between ${
 						precipitation === 'in' && 'bg-neutral-700'
 					}`}
-					onClick={(e) => setPrecipitation('in')}
+					onClick={() => setPrecipitation('in')}
 				>
 					Inches (in) {precipitation === 'in' && <img src={checkmarkIcon} />}
 				</button>
