@@ -32,6 +32,7 @@ _____
 - [React `setState` type](#react-setstate-type)
 - [Using tailwind modified theme variables](#using-tailwind-modified-theme-variables)
 - [TypeScript errors on implementing click outside functionality](#typescript-errors-on-implementing-click-outside-functionality)
+- [Is `font-family` inherited by default?](#is-font-family-inherited-by-default)
 
 ### Importance of prototyping
 I have a separate local version of the project, where I experiment different approaches for doing almost everything (from styling, to writing logic, to fighthing TypeScript).  
@@ -297,3 +298,8 @@ After asking claude, he told me that because the function expects to be invoked 
 _____
 ### Using a favicon
 W3schools has [an article](https://www.w3schools.com/html/html_favicon.asp) that explains how to use a favicon. 
+____
+### Is `font-family` inherited by default? 
+On working on the `WeatherCard` component, I wondered if our project-specific font should be explicitly inherited by each child element by calling `font-family: inherit`. But after asking claude, he told me that the `font-family` is inherited from the parent by default and there is no need to use `font-family: inherit`.  
+
+That makes sense, because in simple html/css projects, we were used to setting the `font-family` on just the `body` then every element in the page followed that font.  
