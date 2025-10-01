@@ -20,7 +20,7 @@ ____
 The above introduction was a nice one though.  
 Last couple of weeks, I was busy with a project for a [one month summer training provided by ministry of communications and Information Technology in Egypt](https://github.com/Mohammed-Lashein/ITI-frontend-1-month-summer-training), so I didn't have time to complete the weather app.  
 
-Since the training ended, now I have a one week to deliver the project. I am not sure if I can make it on time, but this is an opportunity that can't be missed. 
+Since the training ended, now I have one week to deliver the project. I am not sure if I can make it on time, but this is an opportunity that can't be missed. 
 _____
 
 # Table of contents
