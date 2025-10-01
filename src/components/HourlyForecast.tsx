@@ -167,8 +167,11 @@ function HourlyForecast() {
 		<div className='grow bg-neutral-800 p-300 rounded-20 relative'>
 			<Header />
 			<div className='hourly-weather-cards-container flex flex-col gap-200 overflow-scroll h-[630px] pt-2'>
-				{dailyForecastData.map((data, i) => (
+				{dailyForecastData.map(({ time, icon, temperature }, i) => (
 					<HourlyWeatherCard
+						time={time}
+						icon={icon}
+						temperature={temperature}
 						key={i}
 					/>
 				))}
