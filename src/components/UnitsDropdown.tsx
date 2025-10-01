@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import iconDropdown from '@/assets/images/icon-dropdown.svg'
 import iconUnits from '@/assets/images/icon-units.svg'
 import checkmarkIcon from '../assets/images/icon-checkmark.svg'
@@ -128,9 +128,27 @@ function UnitsList() {
 
 function UnitsDropdown() {
 	const [isUnitsListOpen, setIsUnitsListOpen] = useState(false)
+	const unitsDropdownRef = useRef<null | HTMLDivElement>(null) // solved .contains error!
+
+	useEffect(() => {
+		function handleClickOutside(e: MouseEvent) {
+			if (unitsDropdownRef.current && !unitsDropdownRef.current.contains(e.target as Node)) {
+				setIsUnitsListOpen(false)
+			}
+		}
+		if (isUnitsListOpen) {
+			document.addEventListener('click', handleClickOutside)
+		}
+		return () => {
+			document.removeEventListener('click', handleClickOutside)
+		}
+	}, [isUnitsListOpen])
 
 	return (
-		<div className='flex flex-col items-end  p-75 gap-2 relative'>
+		<div
+			className='flex flex-col items-end  p-75 gap-2 relative'
+			ref={unitsDropdownRef}
+		>
 			<TriggerButton setIsUnitsListOpen={setIsUnitsListOpen} />
 			{isUnitsListOpen && <UnitsList />}
 		</div>
