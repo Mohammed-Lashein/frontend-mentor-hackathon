@@ -60,7 +60,7 @@ function UnitsList() {
 				className='hover:bg-neutral-700 p-125 rounded-md w-full text-left cursor-pointer'
 				onClick={() => toggleCurrentMeasurementSystem()}
 			>
-				Switch to {'imperial'}
+				Switch to {currentMeasurementSystem === 'metric' ? 'imperial' : 'metric'}
 			</button>
 			<div className='flex flex-col items-start pb-2 gap-50'>
 				<p className='Label text-sm text-neutral-500 px-2'>Temperature</p>
