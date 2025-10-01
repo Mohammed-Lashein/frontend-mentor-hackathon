@@ -28,6 +28,9 @@ _____
 - [Newer options for the `find` command](#newer-options-for-the-find-command)
 - [Why are asterisks turned into underscores?](#why-are-asterisks-turned-into-underscores)
 - [Regarding modifying tailwind theme variables](#regarding-modifying-tailwind-theme-variables)
+- [css `font-face` directive explained](#a-nice-article-about-font-face)
+- [React `setState` type](#react-setstate-type)
+- [Using tailwind modified theme variables](#using-tailwind-modified-theme-variables)
 
 ### Importance of prototyping
 I have a separate local version of the project, where I experiment different approaches for doing almost everything (from styling, to writing logic, to fighthing TypeScript).  
@@ -182,3 +185,6 @@ type TriggerButtonProps = {
 }
 ```
 I think that the type is a bit verbose, since I got it from vscode intellisense on hovering over the `setIsUnitsListOpen` function. I found that this syntax is mentioned in [react typescript cheatsheet](https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/basic_type_example#basic-prop-types-examples) (see the last example in the examples box)
+____
+### Using tailwind modified theme variables
+The variables we declared in `index.css` like `--spacing-*` can be used directly like `p-600` instead of manually writing `p-[var(--spacing-600)]`. It is amazing that tailwind makes design customization so easy!
