@@ -1,2 +1,43 @@
 /* tailwind config... to be added */
 @import "tailwindcss"
+
+@theme {
+  /* overriden styles to match the project design -- start */
+  --color-neutral-900: #02012C;
+  --color-neutral-800: #262540;
+  --color-neutral-700: #302F4A;
+  --color-neutral-600: #3C3B5E;
+  --color-neutral-300: #ACACB7;
+  --color-neutral-200: #D4D3D9;
+  --color-neutral-0: #FFFFFF;
+
+  --color-orange-500: #FF820A;
+
+  --color-blue-500: #4658D9;
+  --color-blue-700: #2B1B9C;
+
+  /* spacing */
+  --spacing-50: 4px;
+  --spacing-75: 6px;
+  --spacing-100: 8px;
+  --spacing-125: 10px;
+  --spacing-150: 12px;
+  --spacing-200: 16px;
+  --spacing-250: 20px;
+  --spacing-300: 24px;
+  --spacing-400: 32px;
+  --spacing-600: 48px;
+  --spacing-800: 64px;
+  --spacing-1000: 80px;
+  --spacing-1400: 112px;
+
+  /* border radius */
+  --radius-4: 4px;
+  --radius-6: 6px;
+  --radius-8: 8px;
+  --radius-10: 10px;
+  --radius-12: 12px;
+  --radius-20: 20px;
+
+  /* overriden styles to match the project design -- end */
+}
