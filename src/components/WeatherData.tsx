@@ -2,7 +2,7 @@ import iconSunny from '@/assets/images/icon-sunny.webp'
 function WeatherData() {
 	return (
 		<div>
-			<div className="today-weather bg-[url('/bg-today-large.svg')] bg-no-repeat  h-[17.875rem] flex justify-between items-center grow-[2] bg-cover p-12 rounded-[var(--spacing-200)]">
+			<div className="today-weather bg-[url('/bg-today-large.svg')] bg-no-repeat  h-[17.875rem] flex justify-between items-center grow-[2] bg-cover p-12 rounded-16">
 				{/* <div className=" w-full h-[17.875rem] flex justify-between"> */}
 				<div className='flex items-center justify-between w-full weather-details'>
 					<div className='today-weather-info'>
