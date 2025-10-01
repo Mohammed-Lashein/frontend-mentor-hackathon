@@ -55,7 +55,7 @@ function UnitsList() {
 	}
 
 	return (
-		<div className='rounded-md border border-neutral-600 bg-neutral-800 p-2 w-[13.75rem] absolute top-[3.5rem]'>
+		<div className='rounded-md border border-neutral-600 bg-neutral-800 p-2 w-[13.75rem] absolute top-[3.5rem] z-[2]'>
 			<button
 				className='hover:bg-neutral-700 p-125 rounded-md w-full text-left cursor-pointer'
 				onClick={() => toggleCurrentMeasurementSystem()}
