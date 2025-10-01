@@ -14,7 +14,7 @@ function TriggerButton({ setIsUnitsListOpen }: TriggerButtonProps) {
 	return (
 		<>
 			<button
-				className='bg-neutral-800 p-2 rounded-md flex justify-center items-center gap-[var(--spacing-125)] cursor-pointer hover:bg-neutral-700'
+				className='bg-neutral-800 p-2 rounded-md flex justify-center items-center gap-125 cursor-pointer hover:bg-neutral-700'
 				onClick={toggleUnitsList}
 			>
 				<img
@@ -39,21 +39,21 @@ function UnitsList() {
 
 	return (
 		<div className='rounded-md border border-neutral-600 bg-neutral-800 p-2 w-[13.75rem] absolute top-[3.5rem]'>
-			<button className='hover:bg-neutral-700 p-[var(--spacing-125)] rounded-md w-full text-left cursor-pointer'>
+			<button className='hover:bg-neutral-700 p-125 rounded-md w-full text-left cursor-pointer'>
 				Switch to {'imperial'}
 			</button>
-			<div className='flex flex-col items-start pb-2 gap-[var(--spacing-50)]'>
+			<div className='flex flex-col items-start pb-2 gap-50'>
 				<p className='Label text-sm text-neutral-500 px-2'>Temperature</p>
 				{/* p-1 px-3 */}
 				<button
-					className={`hover:bg-neutral-700  p-[var(--spacing-100)] rounded-md w-full text-left cursor-pointer flex justify-between ${
+					className={`hover:bg-neutral-700  p-100 rounded-md w-full text-left cursor-pointer flex justify-between ${
 						temperatureUnit === 'celsius' && 'bg-neutral-700'
 					}`}
 				>
 					Celsius (°C) {temperatureUnit === 'celsius' && <img src={checkmarkIcon} />}
 				</button>
 				<button
-					className={`hover:bg-neutral-700  p-[var(--spacing-100)] rounded-md w-full text-left cursor-pointer flex justify-between ${
+					className={`hover:bg-neutral-700  p-100 rounded-md w-full text-left cursor-pointer flex justify-between ${
 						temperatureUnit === 'fahrenheit' && 'bg-neutral-700'
 					}`}
 					onClick={() => setTemperatureUnit('fahrenheit')}
@@ -63,11 +63,11 @@ function UnitsList() {
 			</div>
 			<hr />
 
-			<div className='flex flex-col items-start pb-2 gap-[var(--spacing-50)]'>
-				<p className='Label text-sm text-neutral-500 p-[var(--spacing-75)]'>WindSpeed</p>
+			<div className='flex flex-col items-start pb-2 gap-50'>
+				<p className='Label text-sm text-neutral-500 p-75'>WindSpeed</p>
 				{/* p-1 px-3 */}
 				<button
-					className={`hover:bg-neutral-700  p-[var(--spacing-100)] rounded-md w-full text-left cursor-pointer flex justify-between ${
+					className={`hover:bg-neutral-700  p-100 rounded-md w-full text-left cursor-pointer flex justify-between ${
 						windSpeed === 'km/h' && 'bg-neutral-700'
 					}`}
 					onClick={() => setWindSpeed('km/h')}
@@ -75,7 +75,7 @@ function UnitsList() {
 					km/h {windSpeed === 'km/h' && <img src={checkmarkIcon} />}
 				</button>
 				<button
-					className={`hover:bg-neutral-700  p-[var(--spacing-100)] rounded-md w-full text-left cursor-pointer flex justify-between ${
+					className={`hover:bg-neutral-700  p-100 rounded-md w-full text-left cursor-pointer flex justify-between ${
 						windSpeed === 'mph' && 'bg-neutral-700'
 					}`}
 					onClick={() => setWindSpeed('mph')}
@@ -85,11 +85,11 @@ function UnitsList() {
 			</div>
 			<hr />
 
-			<div className='flex flex-col items-start pb-2 gap-[var(--spacing-50)]'>
-				<p className='Label text-sm text-neutral-500  p-[var(--spacing-75)]'>Precipitation</p>
+			<div className='flex flex-col items-start pb-2 gap-50'>
+				<p className='Label text-sm text-neutral-500  p-75'>Precipitation</p>
 				{/* p-1 px-3 */}
 				<button
-					className={`hover:bg-neutral-700  p-[var(--spacing-100)] rounded-md w-full text-left cursor-pointer flex justify-between ${
+					className={`hover:bg-neutral-700  p-100 rounded-md w-full text-left cursor-pointer flex justify-between ${
 						precipitation === 'mm' && 'bg-neutral-700'
 					}`}
 					onClick={() => setPrecipitation('mm')}
@@ -97,7 +97,7 @@ function UnitsList() {
 					Millimeters (mm) {precipitation === 'mm' && <img src={checkmarkIcon} />}
 				</button>
 				<button
-					className={`hover:bg-neutral-700  p-[var(--spacing-100)] rounded-md w-full text-left cursor-pointer flex justify-between ${
+					className={`hover:bg-neutral-700  p-100 rounded-md w-full text-left cursor-pointer flex justify-between ${
 						precipitation === 'in' && 'bg-neutral-700'
 					}`}
 					onClick={() => setPrecipitation('in')}
@@ -116,7 +116,7 @@ function UnitsDropdown() {
 	const [isUnitsListOpen, setIsUnitsListOpen] = useState(false)
 
 	return (
-		<div className='flex flex-col items-end  p-[var(--spacing-75)] gap-2 relative'>
+		<div className='flex flex-col items-end  p-75 gap-2 relative'>
 			<TriggerButton setIsUnitsListOpen={setIsUnitsListOpen} />
 			{isUnitsListOpen && <UnitsList />}
 		</div>
