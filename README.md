@@ -27,6 +27,7 @@ _____
 - [Importance of prototyping](#importance-of-prototyping)
 - [Newer options for the `find` command](#newer-options-for-the-find-command)
 - [Why are asterisks turned into underscores?](#why-are-asterisks-turned-into-underscores)
+- [Regarding modifying tailwind theme variables](#regarding-modifying-tailwind-theme-variables)
 
 ### Importance of prototyping
 I have a separate local version of the project, where I experiment different approaches for doing almost everything (from styling, to writing logic, to fighthing TypeScript).  
@@ -166,3 +167,6 @@ I searched the docs but couldn't find them. I asked claude why they didn't menti
 > Why It's Not in the Docs  
 Prettier's docs focus on available options. Since there's **no option to change this behavior** (it's hardcoded), they don't document it as a configurable feature. It's just part of how Prettier handles Markdown by design.
 If you want to keep your asterisks, disabling Prettier for Markdown files is really the cleanest solution.
+_____
+### Regarding modifying tailwind theme variables
+Note that in tailwind v4, (the config file is deprecated)[https://tailwindcss.com/docs/upgrade-guide#using-a-javascript-config-file]. We should modify the `theme` layer directly instead.
