@@ -2,7 +2,7 @@ import searchIcon from '@/assets/images/icon-search.svg'
 function SearchBox() {
 	return (
 		<div className='flex gap-2'>
-			<form className='flex gap-4 flex-col sm:flex-row w-full'>
+			<form className='flex gap-4 flex-col sm:flex-row w-full justify-center'>
 				<div className='flex gap-4 rounded-md bg-neutral-800 p-200 sm:w-[32.75rem] justify-center'>
 					<img
 						src={searchIcon}
