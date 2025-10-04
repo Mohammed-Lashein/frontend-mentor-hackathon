@@ -16,7 +16,8 @@ function WeatherData() {
 							src={iconSunny}
 							alt=''
 						/>
-						<p className='text-6xl font-bricolage'>20°</p>
+            </p>
+						<p className='text-8xl font-bricolage'>20°</p>
 					</div>
 				</div>
 			</div>
