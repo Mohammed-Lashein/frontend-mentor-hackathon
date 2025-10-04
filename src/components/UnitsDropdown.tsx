@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import iconDropdown from '@/assets/images/icon-dropdown.svg'
 import iconUnits from '@/assets/images/icon-units.svg'
 import checkmarkIcon from '../assets/images/icon-checkmark.svg'
+import { useAppDispatch, useAppSelector } from '../hooks'
+import { changeTemperatureUnitToCelsius, changeTemperatureUnitToFahrenheit, changeWindSpeedToKmPerHour, changeWindSpeedToMph } from '../actions-creators'
 
 type TriggerButtonProps = {
 	setIsUnitsListOpen: React.Dispatch<React.SetStateAction<boolean>>
@@ -38,6 +40,9 @@ function UnitsList() {
 	const [precipitation, setPrecipitation] = useState('mm')
 	const [currentMeasurementSystem, setCurrentMeasurementSystem] = useState<'metric' | 'imperial'>('metric')
 
+	const dispatch = useAppDispatch()
+
+
 	function toggleCurrentMeasurementSystem() {
 		if (currentMeasurementSystem === 'metric') {
 			// change to imperial
@@ -68,6 +73,7 @@ function UnitsList() {
 					className={`hover:bg-neutral-700  p-100 rounded-md w-full text-left cursor-pointer flex justify-between ${
 						temperatureUnit === 'celsius' && 'bg-neutral-700'
 					}`}
+					onClick={() => dispatch(changeTemperatureUnitToCelsius())}
 				>
 					Celsius (°C) {temperatureUnit === 'celsius' && <img src={checkmarkIcon} />}
 				</button>
@@ -75,7 +81,10 @@ function UnitsList() {
 					className={`hover:bg-neutral-700  p-100 rounded-md w-full text-left cursor-pointer flex justify-between ${
 						temperatureUnit === 'fahrenheit' && 'bg-neutral-700'
 					}`}
-					onClick={() => setTemperatureUnit('fahrenheit')}
+				onClick={() => {
+					 setTemperatureUnit('fahrenheit') // WILL BE removed
+					 dispatch(changeTemperatureUnitToFahrenheit())
+				}}
 				>
 					Fahrenheit (°F) {temperatureUnit === 'fahrenheit' && <img src={checkmarkIcon} />}
 				</button>
@@ -88,7 +97,10 @@ function UnitsList() {
 					className={`hover:bg-neutral-700  p-100 rounded-md w-full text-left cursor-pointer flex justify-between ${
 						windSpeed === 'km/h' && 'bg-neutral-700'
 					}`}
-					onClick={() => setWindSpeed('km/h')}
+					onClick={() => {
+						setWindSpeed('km/h') // will be removed
+						dispatch(changeWindSpeedToKmPerHour())
+					}}
 				>
 					km/h {windSpeed === 'km/h' && <img src={checkmarkIcon} />}
 				</button>
@@ -96,7 +108,10 @@ function UnitsList() {
 					className={`hover:bg-neutral-700  p-100 rounded-md w-full text-left cursor-pointer flex justify-between ${
 						windSpeed === 'mph' && 'bg-neutral-700'
 					}`}
-					onClick={() => setWindSpeed('mph')}
+					onClick={() => {
+						setWindSpeed('mph') // will be removed
+						dispatch(changeWindSpeedToMph())
+					}}
 				>
 					mph {windSpeed === 'mph' && <img src={checkmarkIcon} />}
 				</button>

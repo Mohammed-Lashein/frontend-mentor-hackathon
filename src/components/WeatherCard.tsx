@@ -1,8 +1,15 @@
+import { useAppSelector } from "../hooks"
+
 type WeatherCardProps = {
 	label: string
 	value: string
 }
 function WeatherCard({ label, value }: WeatherCardProps) {
+	const isLoading = useAppSelector((state) => state.isLoading)
+
+	if(isLoading) {
+		return <h1 className="text-white text-2xl font-bold">-</h1>
+	}
 	return (
 		<div className='font-dm-sans border border-neutral-600 bg-neutral-800 rounded-[var(--radius-12)] flex flex-col gap-300 p-250 grow'>
 			<p className='text-neutral-200'>{label}</p>

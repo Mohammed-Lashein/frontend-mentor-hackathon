@@ -1,24 +1,28 @@
+import { useAppSelector } from '../hooks'
 import WeatherCard from './WeatherCard'
 
 function WeatherCards() {
-	const dataForCards = [
+	const data = useAppSelector(({weatherData}) => ([
 		{
 			label: 'Feels Like',
-			value: '20°',
+			value: weatherData.current.temperature_2m + weatherData.current_units.temperature_2m,
 		},
 		{
 			label: 'Humidity',
-			value: '46%',
+			value: weatherData.current.humidity + weatherData.current_units.humidity,
 		},
 		{
 			label: 'Wind',
-			value: '14 km/h',
+			value: weatherData.current.wind_speed_10m + weatherData.current_units.wind_speed_10m,
 		},
 		{
 			label: 'Precipitation',
-			value: '0mm',
+			value: weatherData.current.precipitation + weatherData.current_units.precipitation,
 		},
+
 	]
+	))
+	const dataForCards = data
 	return (
 		<div className='grid grid-cols-4 pt-400 gap-300'>
 			{dataForCards.map(({ label, value }) => (

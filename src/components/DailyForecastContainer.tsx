@@ -9,7 +9,7 @@ import DailyForecastCard from './DailyForecastCard'
 
 // as named in Figma -- I better quote some names from figma design instead of
 // trying to come up with components names
-function DailyForecastContainer() {
+function DailyForecastContainer() 
 	const dailyForecastData = [
 		{
 			day: 'Tue',
