@@ -57,7 +57,7 @@ function DailyForecastContainer() {
 	return (
 		<div className='pt-600'>
 			<h3 className='text-xl font-dm-sans font-semibold'>Daily forecast</h3>
-			<div className='flex gap-200 pt-250'>
+			<div className='grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] gap-200 pt-250 '>
 				{dailyForecastData.map(({ day, icon, maxTemperature, minTemperature }, i) => (
 					<DailyForecastCard
 						day={day}
