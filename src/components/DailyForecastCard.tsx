@@ -11,7 +11,7 @@ function DailyForecastCard({ day, icon, maxTemperature, minTemperature }: DailyF
 	return (
 		<div className='font-dm-sans border border-neutral-600 bg-neutral-800 rounded-12 flex flex-col gap-200 items-center p-200 '>
 			<p>{day}</p>
-			<p>
+			<p className="w-12 h-12">
 				<img
 					src={icon}
 					alt=''
