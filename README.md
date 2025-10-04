@@ -34,6 +34,7 @@ _____
 - [TypeScript errors on implementing click outside functionality](#typescript-errors-on-implementing-click-outside-functionality)
 - [Is `font-family` inherited by default?](#is-font-family-inherited-by-default)
 - [A tale of two dropdowns](#a-tale-of-two-dropdowns)
+- [The `DailyForecastContainer` alignment issues](#the-dailyforecastcontainer-alignment-issues)
 
 ### Importance of prototyping
 I have a separate local version of the project, where I experiment different approaches for doing almost everything (from styling, to writing logic, to fighthing TypeScript).  
@@ -462,3 +463,16 @@ function DaysList({ days, selectedDay, setSetselectedDay, setIsDaysListOpen }: D
 }
 ```
 Now the intended functionality is working as expected. 
+_____
+### The `DailyForecastContainer` alignment issues
+I was modifying the markup to make the design responsive, and while everything was going smoothly, this wasn't the case for `DailyForecastContainer`.  
+
+I faced some problems with making it conformant to the figma design. Since I used flexbox, I couldn't have that granular control over the layout of the cards.  
+
+I tried switching to grid trying this css declaration: 
+```css
+ grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+```
+But after some trying and seeing solutions for other participants, like [this submission](https://github.com/Riteshpatel-7/weather-app). I found that I need `auto-fit` instead of `auto-fill`. CSS tricks has an [amazing article](https://css-tricks.com/auto-sizing-columns-css-grid-auto-fill-vs-auto-fit/) that explains the difference. You can check it out!
+
+One last note, the pixels value in `minmax(300px, 1fr)` makes the cards too large. I tried `100px` and it was a good option. 
