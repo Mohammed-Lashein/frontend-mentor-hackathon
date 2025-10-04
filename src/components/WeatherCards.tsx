@@ -20,7 +20,7 @@ function WeatherCards() {
 		},
 	]
 	return (
-		<div className='grid grid-cols-4 pt-400 gap-300'>
+		<div className='grid grid-cols-2 sm:grid-cols-4 pt-400 gap-300'>
 			{dataForCards.map(({ label, value }) => (
 				<WeatherCard
 					label={label}
