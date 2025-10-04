@@ -10,11 +10,11 @@ function WeatherData() {
 						<h2 className='text-3xl font-dm-sans'>Berlin, Germany</h2>
 						<p className='date'>Tuesday, Aug 5, 2025</p>
 					</div>
-					<div className='flex items-center temperature'>
+					<div className='flex items-center temperature gap-5'>
+            <p className='w-28'>
 						<img
 							src={iconSunny}
 							alt=''
-							width={100}
 						/>
 						<p className='text-6xl font-bricolage'>20°</p>
 					</div>
