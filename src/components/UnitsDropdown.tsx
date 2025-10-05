@@ -2,8 +2,15 @@ import React, { useEffect, useRef, useState } from 'react'
 import iconDropdown from '@/assets/images/icon-dropdown.svg'
 import iconUnits from '@/assets/images/icon-units.svg'
 import checkmarkIcon from '../assets/images/icon-checkmark.svg'
-import { useAppDispatch, useAppSelector } from '../hooks'
-import { changeTemperatureUnitToCelsius, changeTemperatureUnitToFahrenheit, changeWindSpeedToKmPerHour, changeWindSpeedToMph } from '../actions-creators'
+import { useAppDispatch } from '../hooks'
+import {
+	changePrecipitationToInch,
+	changePrecipitationToMm,
+	changeTemperatureUnitToCelsius,
+	changeTemperatureUnitToFahrenheit,
+	changeWindSpeedToKmPerHour,
+	changeWindSpeedToMph,
+} from '../actions-creators'
 
 type TriggerButtonProps = {
 	setIsUnitsListOpen: React.Dispatch<React.SetStateAction<boolean>>
@@ -35,27 +42,41 @@ function TriggerButton({ setIsUnitsListOpen }: TriggerButtonProps) {
 }
 
 function UnitsList() {
-	const [temperatureUnit, setTemperatureUnit] = useState('celsius')
+	const [temperatureUnit, setTemperatureUnit] = useState('C')
 	const [windSpeed, setWindSpeed] = useState('km/h')
 	const [precipitation, setPrecipitation] = useState('mm')
 	const [currentMeasurementSystem, setCurrentMeasurementSystem] = useState<'metric' | 'imperial'>('metric')
 
 	const dispatch = useAppDispatch()
 
+	// const data = useAppSelector((state) => ({
+	// 	temperature_unit: state.currently_selected_units.temperature,
+	// 	wind_speed_unit: state.currently_selected_units.wind_speed,
+	// 	precipitation_unit: state.currently_selected_units.precipitation,
+	// }))
+	// const { temperature_unit, wind_speed_unit, precipitation_unit } = data
 
 	function toggleCurrentMeasurementSystem() {
 		if (currentMeasurementSystem === 'metric') {
 			// change to imperial
 			setCurrentMeasurementSystem('imperial')
-			setTemperatureUnit('fahrenheit')
+			setTemperatureUnit('F')
 			setWindSpeed('mph')
 			setPrecipitation('in')
+
+			dispatch(changeTemperatureUnitToFahrenheit())
+			dispatch(changeWindSpeedToMph())
+			dispatch(changePrecipitationToInch())
 		} else {
 			// change to metric
 			setCurrentMeasurementSystem('metric')
-			setTemperatureUnit('celsius')
+			setTemperatureUnit('C')
 			setWindSpeed('km/h')
 			setPrecipitation('mm')
+
+			dispatch(changeTemperatureUnitToCelsius())
+			dispatch(changeWindSpeedToKmPerHour())
+			dispatch(changePrecipitationToMm())
 		}
 	}
 
@@ -71,22 +92,25 @@ function UnitsList() {
 				<p className='Label text-sm text-neutral-500 px-2'>Temperature</p>
 				<button
 					className={`hover:bg-neutral-700  p-100 rounded-md w-full text-left cursor-pointer flex justify-between ${
-						temperatureUnit === 'celsius' && 'bg-neutral-700'
+						temperatureUnit === 'C' && 'bg-neutral-700'
 					}`}
-					onClick={() => dispatch(changeTemperatureUnitToCelsius())}
+					onClick={() => {
+						setTemperatureUnit('C')
+						dispatch(changeTemperatureUnitToCelsius())
+					}}
 				>
-					Celsius (°C) {temperatureUnit === 'celsius' && <img src={checkmarkIcon} />}
+					Celsius (°C) {temperatureUnit === 'C' && <img src={checkmarkIcon} />}
 				</button>
 				<button
 					className={`hover:bg-neutral-700  p-100 rounded-md w-full text-left cursor-pointer flex justify-between ${
-						temperatureUnit === 'fahrenheit' && 'bg-neutral-700'
+						temperatureUnit === 'F' && 'bg-neutral-700'
 					}`}
-				onClick={() => {
-					 setTemperatureUnit('fahrenheit') // WILL BE removed
-					 dispatch(changeTemperatureUnitToFahrenheit())
-				}}
+					onClick={() => {
+						setTemperatureUnit('F') // WILL BE removed
+						dispatch(changeTemperatureUnitToFahrenheit())
+					}}
 				>
-					Fahrenheit (°F) {temperatureUnit === 'fahrenheit' && <img src={checkmarkIcon} />}
+					Fahrenheit (°F) {temperatureUnit === 'F' && <img src={checkmarkIcon} />}
 				</button>
 			</div>
 			<hr />
@@ -124,7 +148,10 @@ function UnitsList() {
 					className={`hover:bg-neutral-700  p-100 rounded-md w-full text-left cursor-pointer flex justify-between ${
 						precipitation === 'mm' && 'bg-neutral-700'
 					}`}
-					onClick={() => setPrecipitation('mm')}
+					onClick={() => {
+						setPrecipitation('mm')
+						dispatch(changePrecipitationToMm())
+					}}
 				>
 					Millimeters (mm) {precipitation === 'mm' && <img src={checkmarkIcon} />}
 				</button>
@@ -132,7 +159,10 @@ function UnitsList() {
 					className={`hover:bg-neutral-700  p-100 rounded-md w-full text-left cursor-pointer flex justify-between ${
 						precipitation === 'in' && 'bg-neutral-700'
 					}`}
-					onClick={() => setPrecipitation('in')}
+					onClick={() => {
+						setPrecipitation('in')
+						dispatch(changePrecipitationToInch())
+					}}
 				>
 					Inches (in) {precipitation === 'in' && <img src={checkmarkIcon} />}
 				</button>

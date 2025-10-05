@@ -5,6 +5,7 @@ type WeatherCardProps = {
 	value: string
 }
 function WeatherCard({ label, value }: WeatherCardProps) {
+  // console.log('this is value', value)
 	const isLoading = useAppSelector((state) => state.isLoading)
 
 	if(isLoading) {
