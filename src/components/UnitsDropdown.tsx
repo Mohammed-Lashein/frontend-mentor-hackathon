@@ -42,22 +42,29 @@ function UnitsList() {
 
   const dispatch = useAppDispatch()
 
-	function toggleCurrentMeasurementSystem() {
+function toggleCurrentMeasurementSystem() {
 		if (currentMeasurementSystem === 'metric') {
 			// change to imperial
 			setCurrentMeasurementSystem('imperial')
-			setTemperatureUnit('fahrenheit')
+			setTemperatureUnit('F')
 			setWindSpeed('mph')
 			setPrecipitation('in')
+
+			dispatch(changeTemperatureUnitToFahrenheit())
+			dispatch(changeWindSpeedToMph())
+			dispatch(changePrecipitationToInch())
 		} else {
 			// change to metric
 			setCurrentMeasurementSystem('metric')
-			setTemperatureUnit('celsius')
+			setTemperatureUnit('C')
 			setWindSpeed('km/h')
 			setPrecipitation('mm')
+
+			dispatch(changeTemperatureUnitToCelsius())
+			dispatch(changeWindSpeedToKmPerHour())
+			dispatch(changePrecipitationToMm())
 		}
 	}
-
 	return (
 		<div className='rounded-md border border-neutral-600 bg-neutral-800 p-2 w-[13.75rem] absolute top-[3.5rem] z-[2]'>
 			<button
