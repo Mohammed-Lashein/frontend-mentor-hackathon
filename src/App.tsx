@@ -17,7 +17,7 @@ function App() {
 				How's the sky looking today?{' '}
 			</h1>
 			<SearchBox />
-			<p className='text-red-700 text-sm text-center pt-2'>Search functionality is under construction</p>
+			<p className='text-amber-500 text-sm text-center pt-2'>Search functionality is under construction</p>
 			<MainContent />
 		</div>
 	)
