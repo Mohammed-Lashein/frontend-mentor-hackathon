@@ -1,6 +1,6 @@
 import type { Action } from 'redux'
-import { CHANGE_TEMPERATURE_UNIT_TO_CELSIUS, CHANGE_TEMPERATURE_UNIT_TO_FAHRENHEIT, CHANGE_WIND_SPEED_TO_KM_PER_HOUR, CHANGE_WIND_SPEED_TO_Mph, FETCH_WEATHER_DATA_STARTED, FETCH_WEATHER_DATA_SUCCEEDED } from '../actions'
-import { convertFromCelsiusToFahrenheit, convertFromFahrenheitToCelsius, convertFromKmPerHourToMph, convertFromMphToKmPerHour, getFullWeekDayName } from '../../utils'
+import { CHANGE_PRECIPITATION_TO_INCH, CHANGE_PRECIPITATION_TO_MM, CHANGE_TEMPERATURE_UNIT_TO_CELSIUS, CHANGE_TEMPERATURE_UNIT_TO_FAHRENHEIT, CHANGE_WIND_SPEED_TO_KM_PER_HOUR, CHANGE_WIND_SPEED_TO_Mph, FETCH_WEATHER_DATA_STARTED, FETCH_WEATHER_DATA_SUCCEEDED } from '../actions'
+import { convertFromCelsiusToFahrenheit, convertFromFahrenheitToCelsius, convertFromInchesToMillimeter, convertFromKmPerHourToMph, convertFromMilliMeterToInches, convertFromMphToKmPerHour, getFullWeekDayName } from '../../utils'
 
 interface ActionWithPayload extends Action {
 	payload?: any
@@ -165,6 +165,40 @@ export function weatherDataReducer(state = initialState, action: ActionWithPaylo
 				currently_selected_units: {
 					...state.currently_selected_units,
 					wind_speed: action.payload,
+				},
+			}
+		}
+    case CHANGE_PRECIPITATION_TO_INCH: {
+			const precipitationInInch = convertFromMilliMeterToInches(state.weatherData.current.precipitation)
+			return {
+				...state,
+				weatherData: {
+					...state.weatherData,
+					current: {
+						...state.weatherData.current,
+						precipitation: precipitationInInch,
+					},
+				},
+				currently_selected_units: {
+					...state.currently_selected_units,
+					precipitation: action.payload,
+				},
+			}
+		}
+		case CHANGE_PRECIPITATION_TO_MM: {
+			const precipitationInMm = convertFromInchesToMillimeter(state.weatherData.current.precipitation)
+			return {
+				...state,
+				weatherData: {
+					...state.weatherData,
+					current: {
+						...state.weatherData.current,
+						precipitation: precipitationInMm,
+					},
+				},
+				currently_selected_units: {
+					...state.currently_selected_units,
+					precipitation: action.payload,
 				},
 			}
 		}
