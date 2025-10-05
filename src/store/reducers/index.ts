@@ -1,4 +1,5 @@
 import type { Action } from 'redux'
+import { FETCH_WEATHER_DATA_STARTED } from '../actions'
 
 interface ActionWithPayload extends Action {
 	payload: any
