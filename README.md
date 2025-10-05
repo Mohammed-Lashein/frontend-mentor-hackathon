@@ -45,6 +45,7 @@ For future readers, I will refine this repo so that it acts as a gentle introduc
 - [Is `font-family` inherited by default?](#is-font-family-inherited-by-default)
 - [A tale of two dropdowns](#a-tale-of-two-dropdowns)
 - [The `DailyForecastContainer` alignment issues](#the-dailyforecastcontainer-alignment-issues)
+- [Writing the store reducer initial state](#writing-the-store-reducer-initial-state)
 
 ### Importance of prototyping
 I have a separate local version of the project, where I experiment different approaches for doing almost everything (from styling, to writing logic, to fighthing TypeScript).  
@@ -486,3 +487,10 @@ I tried switching to grid trying this css declaration:
 But after some trying and seeing solutions for other participants, like [this submission](https://github.com/Riteshpatel-7/weather-app). I found that I need `auto-fit` instead of `auto-fill`. CSS tricks has an [amazing article](https://css-tricks.com/auto-sizing-columns-css-grid-auto-fill-vs-auto-fit/) that explains the difference. You can check it out!
 
 One last note, the pixels value in `minmax(300px, 1fr)` makes the cards too large. I tried `100px` and it was a good option. 
+_____
+### Writing the store reducer initial state
+Why did I add an initial value to the state passed to the reducer?  
+To avoid the runtime errors that js throws when we try to access a property on a non-existing yet object. 
+
+How did I know the structure of the initial state I will need?  
+As I mentioned before, I have another prototype project that I experiment with before adding code here. But since time isn't on my side, I made one commit showing the final state structure as the initial state. 
