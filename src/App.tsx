@@ -1,8 +1,15 @@
+import { useEffect } from 'react';
 import MainContent from './components/MainContent';
 import Navbar from './components/Navbar'
 import SearchBox from './components/SearchBox';
+import { useAppDispatch } from './hooks';
+import { fetchInitialWeatherData } from './store/action-creators';
 
 function App() {
+  const dispatch = useAppDispatch()
+  useEffect(() => {
+    dispatch(fetchInitialWeatherData())
+  }, [])
 	return (
 		<div className='px-200 lg:px-16 py-8'>
 			<Navbar />
