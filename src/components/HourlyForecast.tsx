@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import iconDropdown from '@/assets/images/icon-dropdown.svg'
 import iconRain from '@/assets/images/icon-rain.webp'
 import iconDrizzle from '@/assets/images/icon-drizzle.webp'
@@ -7,6 +7,7 @@ import iconPartlyCloudy from '@/assets/images/icon-partly-cloudy.webp'
 import iconStorm from '@/assets/images/icon-storm.webp'
 import iconSnow from '@/assets/images/icon-snow.webp'
 import iconFog from '@/assets/images/icon-fog.webp'
+import { useAppSelector } from '../hooks'
 
 type TriggerButtonProps = {
 	selectedDay: string
@@ -59,9 +60,21 @@ function DaysList({ days, selectedDay, setSetselectedDay, setIsDaysListOpen }: D
 
 function DaysDropdown() {
 	const [isDaysListOpen, setIsDaysListOpen] = useState(false)
-	const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+const days = useAppSelector((state) => state.weekdaysNamesStartingFromToday)
+  const isLoading = useAppSelector((state) => state.isLoading)
 	const [selectedDay, setSetselectedDay] = useState(days[0])
 
+  useEffect(() => {
+    /* 
+      Adding days array as a dev deps is important, because initially it is an [], but after extracting data
+      from the store it is an array filled with elements.
+    */
+      setSetselectedDay(days[0])
+  }, [days])
+
+  if(isLoading) {
+    return <h1>loading</h1>
+  }
 	return (
 		<div>
 			<TriggerButton
