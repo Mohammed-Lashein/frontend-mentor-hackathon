@@ -37,6 +37,12 @@ const initialState = {
 	weekdaysNamesStartingFromToday: [],
 }
 export function weatherDataReducer(state = initialState, action: ActionWithPayload) {
-	// to do
+  switch (action.type) {
+		case FETCH_WEATHER_DATA_STARTED:
+			return {
+				...state,
+				isLoading: true,
+			}
+    }
 	return state
 }
