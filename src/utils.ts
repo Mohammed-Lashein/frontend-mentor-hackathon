@@ -72,3 +72,22 @@ export function extractTimeFromDateISOFormat(dateWithTime: string) {
 	// return the time eg "2 PM"
 	return `${hours} ${dayOrNight}`
 }
+
+export function convertFromCelsiusToFahrenheit(degree: number): number {
+	return Number((degree * (9 / 5) + 32).toFixed(0))
+}
+export function convertFromFahrenheitToCelsius(degree: number): number {
+	return Number(((degree - 32) * (5 / 9)).toFixed(0))
+}
+export function convertFromKmPerHourToMph(speed: number): number {
+	return Number((speed / 1.609).toFixed(0))
+}
+export function convertFromMphToKmPerHour(speed: number): number {
+	return Number((speed * 1.609).toFixed(0))
+}
+export function convertFromMilliMeterToInches(mm: number): number {
+	return Number((mm / 25.4).toFixed(0))
+}
+export function convertFromInchesToMillimeter(inch: number): number {
+	return Number((inch * 25.4).toFixed(0))
+}
