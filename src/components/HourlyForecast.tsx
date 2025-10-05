@@ -36,8 +36,9 @@ type DaysListProps = {
 	selectedDay: string
 	setSetselectedDay: React.Dispatch<React.SetStateAction<string>>
 	setIsDaysListOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setSelectedDayIndex: React.Dispatch<React.SetStateAction<number>>
 }
-function DaysList({ days, selectedDay, setSetselectedDay, setIsDaysListOpen }: DaysListProps) {
+function DaysList({ days, selectedDay, setSetselectedDay, setIsDaysListOpen, setSelectedDayIndex }: DaysListProps) {
 	return (
 		<div className='rounded-6 border border-neutral-600 bg-neutral-800 p-2 w-[13.75rem] absolute right-6 top-20'>
 			{days.map((day, i) => (
@@ -50,6 +51,7 @@ function DaysList({ days, selectedDay, setSetselectedDay, setIsDaysListOpen }: D
             e.stopPropagation()
 						setSetselectedDay(days[i])
 						setIsDaysListOpen(false)
+            setSelectedDayIndex(i)
 					}}
 				>
 					{day}
@@ -59,7 +61,7 @@ function DaysList({ days, selectedDay, setSetselectedDay, setIsDaysListOpen }: D
 	)
 }
 
-function DaysDropdown() {
+function DaysDropdown({setSelectedDayIndex}: {setSelectedDayIndex: React.Dispatch<React.SetStateAction<number>>}) {
 	const [isDaysListOpen, setIsDaysListOpen] = useState(false)
 const days = useAppSelector((state) => state.weekdaysNamesStartingFromToday)
   const isLoading = useAppSelector((state) => state.isLoading)
@@ -88,17 +90,18 @@ const days = useAppSelector((state) => state.weekdaysNamesStartingFromToday)
 					selectedDay={selectedDay}
 					setSetselectedDay={setSetselectedDay}
 					setIsDaysListOpen={setIsDaysListOpen}
+          setSelectedDayIndex={setSelectedDayIndex}
 				/>
 			)}
 		</div>
 	)
 }
 
-function Header() {
+function Header({setSelectedDayIndex}: {setSelectedDayIndex: React.Dispatch<React.SetStateAction<number>>}) {
 	return (
 		<div className='flex justify-between items-center pb-200'>
 			<h4 className='font-semibold text-xl'>HourlyForecast</h4>
-			<DaysDropdown />
+			<DaysDropdown setSelectedDayIndex={setSelectedDayIndex}/>
 		</div>
 	)
 }
@@ -135,7 +138,7 @@ function HourlyForecast() {
   })
 	return (
 		<div className='grow bg-neutral-800 p-300 rounded-20 relative'>
-			<Header />
+			<Header setSelectedDayIndex={setSelectedDayIndex}/>
 			<div className='hourly-weather-cards-container flex flex-col gap-200 overflow-scroll h-[630px] pt-2'>
 				{Array.from({length: 23}).map((_, i) => (
 					<HourlyWeatherCard
