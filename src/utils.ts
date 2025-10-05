@@ -1,5 +1,3 @@
-import iconPartlyCloudy from '@/assets/images/icon-partly-cloudy.webp'
-import iconSunny from '@/assets/images/icon-sunny.webp'
 import iconFog from '@/assets/images/icon-fog.webp'
 
 export function getFullWeekDayName(isoDate: string) {

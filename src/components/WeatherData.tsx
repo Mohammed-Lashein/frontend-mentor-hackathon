@@ -1,4 +1,3 @@
-import iconSunny from '@/assets/images/icon-sunny.webp'
 import WeatherCards from './WeatherCards'
 import DailyForecastContainer from './DailyForecastContainer'
 import { getCorrectIconPathAccordingToWeatherCode, getFullWeekDayName } from '../utils'
