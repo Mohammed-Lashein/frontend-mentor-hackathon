@@ -1,3 +1,7 @@
+import iconPartlyCloudy from '@/assets/images/icon-partly-cloudy.webp'
+import iconSunny from '@/assets/images/icon-sunny.webp'
+import iconFog from '@/assets/images/icon-fog.webp'
+
 export function getFullWeekDayName(isoDate: string) {
 	/* 
     This routine gets today's date in the form of ISO format. 
@@ -21,4 +25,31 @@ export function getFullWeekDayName(isoDate: string) {
 	const [dayNameAbbreviated] = dateString.split(' ')
 	// return the full day name using the map
 	return fullWeekdaysNames.get(dayNameAbbreviated)
+}
+export function getAbbreviatedWeekDayName(isoDate: string) {
+	// pass the input to the Date constructor
+	const date = new Date(isoDate)
+	// call toDateString() method
+	const dateString = date.toDateString()
+	// split on the space, and destructure the day name
+	const [dayNameAbbreviated] = dateString.split(' ')
+	return dayNameAbbreviated
+}
+export function getCorrectIconPathAccordingToWeatherCode(code: number) {
+	switch (code) {
+		case 0:
+			// clear sky, but there is no icon for it, so I will add sunny
+			/* Update: How will it be sunny on a clear sky night? */
+			// I will use cloudy instead since these are the icons we have right now
+			/* 
+      I may track whether it is day or night and render different icons accordingly, but this will require
+      a change in the redux store structure (which is already messy), so this will be deferred for later.
+    */
+			return iconFog
+		case 1:
+		case 2:
+		case 3:
+			return iconFog
+	}
+	return ''
 }

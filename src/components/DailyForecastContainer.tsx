@@ -6,64 +6,28 @@ import iconStorm from '@/assets/images/icon-storm.webp'
 import iconSnow from '@/assets/images/icon-snow.webp'
 import iconFog from '@/assets/images/icon-fog.webp'
 import DailyForecastCard from './DailyForecastCard'
+import { useAppSelector } from '../hooks'
+import { getAbbreviatedWeekDayName, getCorrectIconPathAccordingToWeatherCode } from '../utils'
 
 // as named in Figma -- I better quote some names from figma design instead of
 // trying to come up with components names
 function DailyForecastContainer() {
-	const dailyForecastData = [
-		{
-			day: 'Tue',
-			icon: iconRain,
-			maxTemperature: '20°',
-			minTemperature: '14°',
-		},
-		{
-			day: 'Tue',
-			icon: iconDrizzle,
-			maxTemperature: '20°',
-			minTemperature: '14°',
-		},
-		{
-			day: 'Tue',
-			icon: iconSunny,
-			maxTemperature: '20°',
-			minTemperature: '14°',
-		},
-		{
-			day: 'Tue',
-			icon: iconPartlyCloudy,
-			maxTemperature: '20°',
-			minTemperature: '14°',
-		},
-		{
-			day: 'Tue',
-			icon: iconStorm,
-			maxTemperature: '20°',
-			minTemperature: '14°',
-		},
-		{
-			day: 'Tue',
-			icon: iconSnow,
-			maxTemperature: '20°',
-			minTemperature: '14°',
-		},
-		{
-			day: 'Tue',
-			icon: iconFog,
-			maxTemperature: '20°',
-			minTemperature: '14°',
-		},
-	]
+   const dailyForecastData = useAppSelector((state) => ({
+    days: state.weatherData.daily.time.map((day: string) => getAbbreviatedWeekDayName(day)),
+    maxTemperature: state.weatherData.daily.apparent_temperature_max,
+    minTemperature: state.weatherData.daily.apparent_temperature_min,
+    weatherCode: state.weatherData.daily.weather_code || []
+  }))
 	return (
 		<div className='pt-600'>
 			<h3 className='text-xl font-dm-sans font-semibold'>Daily forecast</h3>
 			<div className='grid grid-cols-[repeat(auto-fit,minmax(100px,1fr))] gap-200 pt-250 '>
-				{dailyForecastData.map(({ day, icon, maxTemperature, minTemperature }, i) => (
+				{Array.from({length: 7}).map((_, i) => (
 					<DailyForecastCard
-						day={day}
-						icon={icon}
-						maxTemperature={maxTemperature}
-						minTemperature={minTemperature}
+						day={dailyForecastData.days[i]}
+						icon={getCorrectIconPathAccordingToWeatherCode(dailyForecastData.weatherCode[i])}
+						maxTemperature={dailyForecastData.maxTemperature[i] + '°'}
+						minTemperature={dailyForecastData.maxTemperature[i] + '°'}
 						key={i} // I will change the key to be the day name since it is unique in a week when we get the data from the api
 					/>
 				))}
