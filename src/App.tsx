@@ -9,8 +9,9 @@ function App() {
 			<h1 className='text-white text-3xl pt-600 pb-800 text-center text-[3.25rem] font-bricolage'>
 				How's the sky looking today?{' '}
 			</h1>
-      <SearchBox />
-      <MainContent />
+			<SearchBox />
+			<p className='text-red-700 text-sm text-center pt-2'>Search functionality is under construction</p>
+			<MainContent />
 		</div>
 	)
 }
