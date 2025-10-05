@@ -23,7 +23,7 @@ function WeatherData() {
   const currentWeatherCode = useAppSelector((state) => state.weatherData.current.weather_code)
 	return (
 		<div>
-			<div className="today-weather bg-[url('/bg-today-small.svg')] sm:bg-[url('/bg-today-large.svg')] bg-no-repeat  h-[17.875rem] flex justify-between items-center bg-cover p-12 rounded-16">
+			<div className="today-weather bg-[url('/bg-today-small.svg')] sm:bg-[url('/bg-today-large.svg')] bg-no-repeat  h-[17.875rem] flex justify-between items-center bg-cover lg:p-12 rounded-16 max-w-full">
 				<div className='flex items-center justify-between weather-details flex-col sm:flex-row w-full'>
 					<div className='today-weather-info'>
 						<h2 className='text-3xl font-dm-sans'>Cairo, Egypt</h2>
