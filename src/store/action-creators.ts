@@ -1,4 +1,4 @@
-import { FETCH_WEATHER_DATA_STARTED, FETCH_WEATHER_DATA_SUCCEEDED } from "./actions";
+import { CHANGE_TEMPERATURE_UNIT_TO_CELSIUS, CHANGE_TEMPERATURE_UNIT_TO_FAHRENHEIT, FETCH_WEATHER_DATA_STARTED, FETCH_WEATHER_DATA_SUCCEEDED } from "./actions";
 import type { AppDispatch } from "./store";
 
 function fetchInitialWeatherDataStarted() {
@@ -46,5 +46,30 @@ export function fetchInitialWeatherData() {
 		)
 		const res = await data.json()
 		dispatch(fetchInitialWeatherDataSucceeded(res))
+	}
+}
+export function changeTemperatureUnitToCelsius() {
+	/* 
+        This routine is responsible for dispatching the correction action type, along
+        with providing that the chosen unit is celsius.
+
+        Will the provided unit be just C or celsius ?
+    */
+	return {
+		type: CHANGE_TEMPERATURE_UNIT_TO_CELSIUS,
+		payload: '°C',
+	}
+}
+export function changeTemperatureUnitToFahrenheit() {
+	/* 
+        This routine is responsible for dispatching the correction action type, along
+        with providing that the chosen unit is celsius.
+
+        Will the provided unit be just C or celsius ?
+        => I used C initially
+    */
+	return {
+		type: CHANGE_TEMPERATURE_UNIT_TO_FAHRENHEIT,
+		payload: '°F',
 	}
 }

@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import iconDropdown from '@/assets/images/icon-dropdown.svg'
 import iconUnits from '@/assets/images/icon-units.svg'
 import checkmarkIcon from '../assets/images/icon-checkmark.svg'
+import { useAppDispatch } from '../hooks'
+import { changeTemperatureUnitToCelsius, changeTemperatureUnitToFahrenheit } from '../store/action-creators'
 
 type TriggerButtonProps = {
 	setIsUnitsListOpen: React.Dispatch<React.SetStateAction<boolean>>
@@ -38,6 +40,8 @@ function UnitsList() {
 	const [precipitation, setPrecipitation] = useState('mm')
 	const [currentMeasurementSystem, setCurrentMeasurementSystem] = useState<'metric' | 'imperial'>('metric')
 
+  const dispatch = useAppDispatch()
+
 	function toggleCurrentMeasurementSystem() {
 		if (currentMeasurementSystem === 'metric') {
 			// change to imperial
@@ -68,6 +72,10 @@ function UnitsList() {
 					className={`hover:bg-neutral-700  p-100 rounded-md w-full text-left cursor-pointer flex justify-between ${
 						temperatureUnit === 'celsius' && 'bg-neutral-700'
 					}`}
+          onClick={() => {
+            setTemperatureUnit('celsius')
+						dispatch(changeTemperatureUnitToCelsius())
+          }}
 				>
 					Celsius (°C) {temperatureUnit === 'celsius' && <img src={checkmarkIcon} />}
 				</button>
@@ -75,7 +83,10 @@ function UnitsList() {
 					className={`hover:bg-neutral-700  p-100 rounded-md w-full text-left cursor-pointer flex justify-between ${
 						temperatureUnit === 'fahrenheit' && 'bg-neutral-700'
 					}`}
-					onClick={() => setTemperatureUnit('fahrenheit')}
+					onClick={() => {
+            setTemperatureUnit('fahrenheit')
+            dispatch(changeTemperatureUnitToFahrenheit())
+          }}
 				>
 					Fahrenheit (°F) {temperatureUnit === 'fahrenheit' && <img src={checkmarkIcon} />}
 				</button>
