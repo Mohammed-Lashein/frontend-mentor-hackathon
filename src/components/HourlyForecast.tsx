@@ -8,6 +8,7 @@ import iconStorm from '@/assets/images/icon-storm.webp'
 import iconSnow from '@/assets/images/icon-snow.webp'
 import iconFog from '@/assets/images/icon-fog.webp'
 import { useAppSelector } from '../hooks'
+import { extractTimeFromDateISOFormat, getCorrectIconPathAccordingToWeatherCode } from '../utils'
 
 type TriggerButtonProps = {
 	selectedDay: string
@@ -124,68 +125,23 @@ function HourlyWeatherCard({ icon, time, temperature }: HourlyWeatherCardProps) 
 	)
 }
 function HourlyForecast() {
-	const dailyForecastData = [
-		{
-			time: '3 PM',
-			icon: iconRain,
-			temperature: '20°',
-		},
-		{
-			time: '3 PM',
-			icon: iconDrizzle,
-			temperature: '20°',
-		},
-		{
-			time: '3 PM',
-			icon: iconSunny,
-			temperature: '20°',
-		},
-		{
-			time: '3 PM',
-			icon: iconPartlyCloudy,
-			temperature: '20°',
-		},
-		{
-			time: '3 PM',
-			icon: iconStorm,
-			temperature: '20°',
-		},
-		{
-			time: '3 PM',
-			icon: iconSnow,
-			temperature: '20°',
-		},
-		{
-			time: '3 PM',
-			icon: iconFog,
-			temperature: '20°',
-		},
-		{
-			time: '3 PM',
-			icon: iconFog,
-			temperature: '20°',
-		},
-		{
-			time: '3 PM',
-			icon: iconFog,
-			temperature: '20°',
-		},
-		{
-			time: '3 PM',
-			icon: iconFog,
-			temperature: '20°',
-		},
-	]
-
+   const [selectedDayIndex, setSelectedDayIndex] = useState(0)
+  const dailyForecastData = useAppSelector((state) => {
+    return {
+    time: state.weatherData.hourly.time.slice(24 * selectedDayIndex, 24 + (24 * selectedDayIndex)),
+    weatherCode: state.weatherData.hourly.weather_code.slice(24 * selectedDayIndex, 24 + (24 * selectedDayIndex)),
+    temperature:  state.weatherData.hourly.temperature_2m.slice(24 * selectedDayIndex, 24 + (24 * selectedDayIndex)),
+  }
+  })
 	return (
 		<div className='grow bg-neutral-800 p-300 rounded-20 relative'>
 			<Header />
 			<div className='hourly-weather-cards-container flex flex-col gap-200 overflow-scroll h-[630px] pt-2'>
-				{dailyForecastData.map(({ time, icon, temperature }, i) => (
+				{Array.from({length: 23}).map((_, i) => (
 					<HourlyWeatherCard
-						time={time}
-						icon={icon}
-						temperature={temperature}
+						time={extractTimeFromDateISOFormat(dailyForecastData.time[i])}
+						icon={getCorrectIconPathAccordingToWeatherCode(dailyForecastData.weatherCode[i])}
+						temperature={dailyForecastData.temperature[i] + '°'}
 						key={i}
 					/>
 				))}

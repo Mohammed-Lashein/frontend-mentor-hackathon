@@ -53,3 +53,22 @@ export function getCorrectIconPathAccordingToWeatherCode(code: number) {
 	}
 	return ''
 }
+export function extractTimeFromDateISOFormat(dateWithTime: string) {
+	// This function takes date in iso format as a param
+	/* 
+    It passes that date in iso format to the Date() constructor.
+    It is responsible for returning an array of times in 12 hour format
+  */
+
+	// pass the input date to Date() constructor
+	const todayDateWithTime = new Date(dateWithTime)
+	// call toLocaleTimeString() method on the newly created date
+	const detailedTime = todayDateWithTime.toLocaleTimeString()
+	// split the string on the " "
+	// store whether it is AM or PM
+	const [time, dayOrNight] = detailedTime.split(' ')
+	// split the string  on the colon, and destructure it to get the hours
+	const [hours] = time.split(':')
+	// return the time eg "2 PM"
+	return `${hours} ${dayOrNight}`
+}
