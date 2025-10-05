@@ -1,6 +1,6 @@
 import type { Action } from 'redux'
-import { CHANGE_TEMPERATURE_UNIT_TO_CELSIUS, CHANGE_TEMPERATURE_UNIT_TO_FAHRENHEIT, FETCH_WEATHER_DATA_STARTED, FETCH_WEATHER_DATA_SUCCEEDED } from '../actions'
-import { convertFromCelsiusToFahrenheit, convertFromFahrenheitToCelsius, getFullWeekDayName } from '../../utils'
+import { CHANGE_TEMPERATURE_UNIT_TO_CELSIUS, CHANGE_TEMPERATURE_UNIT_TO_FAHRENHEIT, CHANGE_WIND_SPEED_TO_KM_PER_HOUR, CHANGE_WIND_SPEED_TO_Mph, FETCH_WEATHER_DATA_STARTED, FETCH_WEATHER_DATA_SUCCEEDED } from '../actions'
+import { convertFromCelsiusToFahrenheit, convertFromFahrenheitToCelsius, convertFromKmPerHourToMph, convertFromMphToKmPerHour, getFullWeekDayName } from '../../utils'
 
 interface ActionWithPayload extends Action {
 	payload?: any
@@ -11,7 +11,7 @@ const initialState = {
 			temperature_2m: 0,
 			relative_humidity_2m: 0,
 			precipitation: 0,
-			wind_speed_2m: 0,
+			wind_speed_10m: 0,
 		},
 		current_units: {
 			temperature_2m: '',
@@ -127,6 +127,44 @@ export function weatherDataReducer(state = initialState, action: ActionWithPaylo
 						...state.weatherData.current,
 						temperature_2m: currentTemperatureUpdated,
 					},
+				},
+			}
+		}
+    case CHANGE_WIND_SPEED_TO_KM_PER_HOUR: {
+			// get the value of the wind speed from the state and update it
+			const wind_speed_in_km_per_hour = convertFromMphToKmPerHour(state.weatherData.current.wind_speed_10m)
+			// return updated state with updated value AND measuring unit
+			return {
+				...state,
+				weatherData: {
+					...state.weatherData,
+					current: {
+						...state.weatherData.current,
+						wind_speed_10m: wind_speed_in_km_per_hour,
+					},
+				},
+				currently_selected_units: {
+					...state.currently_selected_units,
+					wind_speed: action.payload,
+				},
+			}
+		}
+		case CHANGE_WIND_SPEED_TO_Mph: {
+			// get the value of the wind speed from the state and update it
+			const wind_speed_in_km_per_hour = convertFromKmPerHourToMph(state.weatherData.current.wind_speed_10m)
+			// return updated state with updated value AND measuring unit
+			return {
+				...state,
+				weatherData: {
+					...state.weatherData,
+					current: {
+						...state.weatherData.current,
+						wind_speed_10m: wind_speed_in_km_per_hour,
+					},
+				},
+				currently_selected_units: {
+					...state.currently_selected_units,
+					wind_speed: action.payload,
 				},
 			}
 		}

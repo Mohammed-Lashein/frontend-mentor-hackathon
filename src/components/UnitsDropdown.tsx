@@ -3,7 +3,7 @@ import iconDropdown from '@/assets/images/icon-dropdown.svg'
 import iconUnits from '@/assets/images/icon-units.svg'
 import checkmarkIcon from '../assets/images/icon-checkmark.svg'
 import { useAppDispatch } from '../hooks'
-import { changeTemperatureUnitToCelsius, changeTemperatureUnitToFahrenheit } from '../store/action-creators'
+import { changeTemperatureUnitToCelsius, changeTemperatureUnitToFahrenheit, changeWindSpeedToKmPerHour, changeWindSpeedToMph } from '../store/action-creators'
 
 type TriggerButtonProps = {
 	setIsUnitsListOpen: React.Dispatch<React.SetStateAction<boolean>>
@@ -99,7 +99,10 @@ function UnitsList() {
 					className={`hover:bg-neutral-700  p-100 rounded-md w-full text-left cursor-pointer flex justify-between ${
 						windSpeed === 'km/h' && 'bg-neutral-700'
 					}`}
-					onClick={() => setWindSpeed('km/h')}
+					onClick={() => {
+						setWindSpeed('km/h') // will be removed
+						dispatch(changeWindSpeedToKmPerHour())
+					}}
 				>
 					km/h {windSpeed === 'km/h' && <img src={checkmarkIcon} />}
 				</button>
@@ -107,7 +110,10 @@ function UnitsList() {
 					className={`hover:bg-neutral-700  p-100 rounded-md w-full text-left cursor-pointer flex justify-between ${
 						windSpeed === 'mph' && 'bg-neutral-700'
 					}`}
-					onClick={() => setWindSpeed('mph')}
+					onClick={() => {
+						setWindSpeed('mph') // will be removed
+						dispatch(changeWindSpeedToMph())
+					}}
 				>
 					mph {windSpeed === 'mph' && <img src={checkmarkIcon} />}
 				</button>

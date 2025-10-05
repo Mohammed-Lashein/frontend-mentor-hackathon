@@ -1,4 +1,4 @@
-import { CHANGE_TEMPERATURE_UNIT_TO_CELSIUS, CHANGE_TEMPERATURE_UNIT_TO_FAHRENHEIT, FETCH_WEATHER_DATA_STARTED, FETCH_WEATHER_DATA_SUCCEEDED } from "./actions";
+import { CHANGE_TEMPERATURE_UNIT_TO_CELSIUS, CHANGE_TEMPERATURE_UNIT_TO_FAHRENHEIT, CHANGE_WIND_SPEED_TO_KM_PER_HOUR, CHANGE_WIND_SPEED_TO_Mph, FETCH_WEATHER_DATA_STARTED, FETCH_WEATHER_DATA_SUCCEEDED } from "./actions";
 import type { AppDispatch } from "./store";
 
 function fetchInitialWeatherDataStarted() {
@@ -71,5 +71,17 @@ export function changeTemperatureUnitToFahrenheit() {
 	return {
 		type: CHANGE_TEMPERATURE_UNIT_TO_FAHRENHEIT,
 		payload: '°F',
+	}
+}
+export function changeWindSpeedToKmPerHour() {
+	return {
+		type: CHANGE_WIND_SPEED_TO_KM_PER_HOUR,
+		payload: 'km/h',
+	}
+}
+export function changeWindSpeedToMph() {
+	return {
+		type: CHANGE_WIND_SPEED_TO_Mph,
+		payload: 'mph',
 	}
 }
