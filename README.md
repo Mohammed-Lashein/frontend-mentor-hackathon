@@ -22,6 +22,16 @@ Last couple of weeks, I was busy with a project for a [one month summer training
 
 Since the training ended, now I have one week to deliver the project. I am not sure if I can make it on time, but this is an opportunity that can't be missed. 
 _____
+### After a one week update
+Time has passed and the submission is tomorrow. Unfortunately, I couldn't finish all of the required functionality (I have a prototype version that I code in first before adding code here). I also didn't have time to write clean maintainable code. 
+
+Required functionalities that haven't been implemented yet: 
+1. Search functionality
+2. Adding Favorite places
+
+It is important to note for readers that the code of the redux store is a bit convoluted. It is not the best possible approach to using redux, but I didn't have time to follow the best practices.  
+
+For future readers, I will refine this repo so that it acts as a gentle introduction to best programming practices and also as a solution for the challenge.
 
 # Table of contents
 - [Importance of prototyping](#importance-of-prototyping)
