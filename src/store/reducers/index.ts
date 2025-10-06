@@ -21,13 +21,13 @@ const initialState = {
 		},
 		daily: {
 			time: [],
-			apparent_temperature_max: [],
-			apparent_temperature_min: [],
+			apparent_temperature_max: [] as number[],
+			apparent_temperature_min: [] as number[],
 		},
 		hourly: {
 			time: [],
-			weather_code: [],
-			temperature_2m: [],
+			weather_code: [] as number[],
+			temperature_2m: [] as number[],
 		},
 	},
 	currently_selected_units: {
@@ -202,6 +202,8 @@ export function weatherDataReducer(state = initialState, action: ActionWithPaylo
 				},
 			}
 		}
+    default: 
+    return state
     }
 	return state
 }
