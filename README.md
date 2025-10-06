@@ -46,6 +46,7 @@ For future readers, I will refine this repo so that it acts as a gentle introduc
 - [A tale of two dropdowns](#a-tale-of-two-dropdowns)
 - [The `DailyForecastContainer` alignment issues](#the-dailyforecastcontainer-alignment-issues)
 - [Writing the store reducer initial state](#writing-the-store-reducer-initial-state)
+- [Weather values change on reselecting the same measuring unit?](#weather-values-change-on-reselecting-the-same-measuring-unit)
 
 ### Importance of prototyping
 I have a separate local version of the project, where I experiment different approaches for doing almost everything (from styling, to writing logic, to fighthing TypeScript).  
@@ -494,3 +495,11 @@ To avoid the runtime errors that js throws when we try to access a property on a
 
 How did I know the structure of the initial state I will need?  
 As I mentioned before, I have another prototype project that I experiment with before adding code here. But since time isn't on my side, I made one commit showing the final state structure as the initial state. 
+____
+### Weather values change on reselecting the same measuring unit?
+In v1 of the project launch, I noticed that trying to reselct an already selected unit caused the weather values like temperature and wind speed to have wrong values.  
+
+After careful inspection, it seems that this was because when a unit is already selected, reselecting it dispatched an action, which calls the utils responsible for numbers conversion to suit the selected unit. 
+
+That's why it is important to check the selected units before dispatching any action in the code. And this is where unit testing and TDD shine. But since time wasn't on our side in this project, I couldn't follow these practices.  
+But thankfully I found that bug.  
