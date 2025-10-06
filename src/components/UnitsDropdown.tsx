@@ -46,7 +46,7 @@ function toggleCurrentMeasurementSystem() {
 		if (currentMeasurementSystem === 'metric') {
 			// change to imperial
 			setCurrentMeasurementSystem('imperial')
-			setTemperatureUnit('F')
+			setTemperatureUnit('fahrenheit')
 			setWindSpeed('mph')
 			setPrecipitation('in')
 
@@ -56,7 +56,7 @@ function toggleCurrentMeasurementSystem() {
 		} else {
 			// change to metric
 			setCurrentMeasurementSystem('metric')
-			setTemperatureUnit('C')
+			setTemperatureUnit('celsius')
 			setWindSpeed('km/h')
 			setPrecipitation('mm')
 
@@ -80,8 +80,10 @@ function toggleCurrentMeasurementSystem() {
 						temperatureUnit === 'celsius' && 'bg-neutral-700'
 					}`}
           onClick={() => {
-            setTemperatureUnit('celsius')
-						dispatch(changeTemperatureUnitToCelsius())
+            if(temperatureUnit !== 'celsius') {
+              setTemperatureUnit('celsius')
+              dispatch(changeTemperatureUnitToCelsius())
+            }
           }}
 				>
 					Celsius (°C) {temperatureUnit === 'celsius' && <img src={checkmarkIcon} />}
@@ -91,8 +93,10 @@ function toggleCurrentMeasurementSystem() {
 						temperatureUnit === 'fahrenheit' && 'bg-neutral-700'
 					}`}
 					onClick={() => {
-            setTemperatureUnit('fahrenheit')
-            dispatch(changeTemperatureUnitToFahrenheit())
+            if(temperatureUnit !== 'fahrenheit') {
+              setTemperatureUnit('fahrenheit')
+              dispatch(changeTemperatureUnitToFahrenheit())
+            }
           }}
 				>
 					Fahrenheit (°F) {temperatureUnit === 'fahrenheit' && <img src={checkmarkIcon} />}
@@ -107,8 +111,10 @@ function toggleCurrentMeasurementSystem() {
 						windSpeed === 'km/h' && 'bg-neutral-700'
 					}`}
 					onClick={() => {
-						setWindSpeed('km/h') // will be removed
-						dispatch(changeWindSpeedToKmPerHour())
+            if(windSpeed !== 'km/h') {
+              setWindSpeed('km/h') 
+              dispatch(changeWindSpeedToKmPerHour())
+            }
 					}}
 				>
 					km/h {windSpeed === 'km/h' && <img src={checkmarkIcon} />}
@@ -118,8 +124,10 @@ function toggleCurrentMeasurementSystem() {
 						windSpeed === 'mph' && 'bg-neutral-700'
 					}`}
 					onClick={() => {
-						setWindSpeed('mph') // will be removed
-						dispatch(changeWindSpeedToMph())
+            if(windSpeed !== 'mph') {
+              setWindSpeed('mph') 
+              dispatch(changeWindSpeedToMph())
+            }
 					}}
 				>
 					mph {windSpeed === 'mph' && <img src={checkmarkIcon} />}
@@ -134,8 +142,10 @@ function toggleCurrentMeasurementSystem() {
 						precipitation === 'mm' && 'bg-neutral-700'
 					}`}
 					onClick={() => {
-						setPrecipitation('mm')
-						dispatch(changePrecipitationToMm())
+            if(precipitation !== 'mm') {
+              setPrecipitation('mm')
+              dispatch(changePrecipitationToMm())
+            }
 					}}
 				>
 					Millimeters (mm) {precipitation === 'mm' && <img src={checkmarkIcon} />}
@@ -145,8 +155,10 @@ function toggleCurrentMeasurementSystem() {
 						precipitation === 'in' && 'bg-neutral-700'
 					}`}
 					onClick={() => {
-						setPrecipitation('in')
-						dispatch(changePrecipitationToInch())
+            if(precipitation !== 'in') {
+              setPrecipitation('in')
+              dispatch(changePrecipitationToInch())
+            }
 					}}
 				>
 					Inches (in) {precipitation === 'in' && <img src={checkmarkIcon} />}
