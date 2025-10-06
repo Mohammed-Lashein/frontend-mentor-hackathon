@@ -50,19 +50,39 @@ function toggleCurrentMeasurementSystem() {
 			setWindSpeed('mph')
 			setPrecipitation('in')
 
-			dispatch(changeTemperatureUnitToFahrenheit())
-			dispatch(changeWindSpeedToMph())
-			dispatch(changePrecipitationToInch())
+      if(temperatureUnit !== 'fahrenheit') {
+        /* These conditions guard against the case where we chose imperial units then switched to imperial.
+        Without this condition, on clicking "switch to imperial" the reducer will deal with temperature
+        values in fahrenheit as if they were in celsius (since we dispatched an action that will convert 
+        the passed temperature data to it as celsius to fahrenheit).
+        
+        So we need to make sure that we are making the conversion to the expected measuring units only.
+        In a nutshell, if the user selected fahrenheit then selected "switch to imperial", the temperature
+        should stay the same.
+        */
+        dispatch(changeTemperatureUnitToFahrenheit())
+      }
+      if(windSpeed !== 'mph') {
+        dispatch(changeWindSpeedToMph())
+      }
+      if(precipitation !== 'inch') {
+        dispatch(changePrecipitationToInch())
+      }
 		} else {
 			// change to metric
 			setCurrentMeasurementSystem('metric')
 			setTemperatureUnit('celsius')
 			setWindSpeed('km/h')
 			setPrecipitation('mm')
-
-			dispatch(changeTemperatureUnitToCelsius())
-			dispatch(changeWindSpeedToKmPerHour())
-			dispatch(changePrecipitationToMm())
+      if(temperatureUnit !== ' celsius') {
+        dispatch(changeTemperatureUnitToCelsius())
+      }
+      if(windSpeed !== 'km/h') {
+        dispatch(changeWindSpeedToKmPerHour())
+      }
+      if(precipitation !== 'mm') {
+        dispatch(changePrecipitationToMm())
+      }
 		}
 	}
 	return (
