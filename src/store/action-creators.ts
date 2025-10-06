@@ -1,5 +1,5 @@
 import { CHANGE_PRECIPITATION_TO_INCH, CHANGE_PRECIPITATION_TO_MM, CHANGE_TEMPERATURE_UNIT_TO_CELSIUS, CHANGE_TEMPERATURE_UNIT_TO_FAHRENHEIT, CHANGE_WIND_SPEED_TO_KM_PER_HOUR, CHANGE_WIND_SPEED_TO_Mph, FETCH_WEATHER_DATA_STARTED, FETCH_WEATHER_DATA_SUCCEEDED } from "./actions";
-import type { AppDispatch } from "./store";
+import type { AppDispatch } from ".";
 
 function fetchInitialWeatherDataStarted() {
 	return {
