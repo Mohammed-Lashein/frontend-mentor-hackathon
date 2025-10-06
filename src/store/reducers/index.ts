@@ -36,6 +36,7 @@ const initialState = {
 		precipitation: 'mm',
 	},
 	weekdaysNamesStartingFromToday: [],
+  isLoading: true
 }
 export function weatherDataReducer(state = initialState, action: ActionWithPayload) {
   switch (action.type) {
