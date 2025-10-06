@@ -3,7 +3,14 @@ import iconDropdown from '@/assets/images/icon-dropdown.svg'
 import iconUnits from '@/assets/images/icon-units.svg'
 import checkmarkIcon from '../assets/images/icon-checkmark.svg'
 import { useAppDispatch } from '../hooks'
-import { changePrecipitationToInch, changePrecipitationToMm, changeTemperatureUnitToCelsius, changeTemperatureUnitToFahrenheit, changeWindSpeedToKmPerHour, changeWindSpeedToMph } from '../store/action-creators'
+import {
+	changePrecipitationToInch,
+	changePrecipitationToMm,
+	changeTemperatureUnitToCelsius,
+	changeTemperatureUnitToFahrenheit,
+	changeWindSpeedToKmPerHour,
+	changeWindSpeedToMph,
+} from '../store/action-creators'
 
 type TriggerButtonProps = {
 	setIsUnitsListOpen: React.Dispatch<React.SetStateAction<boolean>>
@@ -33,16 +40,34 @@ function TriggerButton({ setIsUnitsListOpen }: TriggerButtonProps) {
 		</>
 	)
 }
+type UnitsListProps = {
+	temperatureUnit: string
+	setTemperatureUnit: React.Dispatch<React.SetStateAction<string>>
+	windSpeed: string
+	setWindSpeed: React.Dispatch<React.SetStateAction<string>>
+	precipitation: string
+	setPrecipitation: React.Dispatch<React.SetStateAction<string>>
+	currentMeasurementSystem: string
+	setCurrentMeasurementSystem: React.Dispatch<React.SetStateAction<"metric" | "imperial">>
+}
+function UnitsList({
+	temperatureUnit,
+	setTemperatureUnit,
+	windSpeed,
+	setWindSpeed,
+	precipitation,
+	setPrecipitation,
+	currentMeasurementSystem,
+	setCurrentMeasurementSystem,
+}: UnitsListProps) {
+	// const [temperatureUnit, setTemperatureUnit] = useState('celsius')
+	// const [windSpeed, setWindSpeed] = useState('km/h')
+	// const [precipitation, setPrecipitation] = useState('mm')
+	// const [currentMeasurementSystem, setCurrentMeasurementSystem] = useState<'metric' | 'imperial'>('metric')
 
-function UnitsList() {
-	const [temperatureUnit, setTemperatureUnit] = useState('celsius')
-	const [windSpeed, setWindSpeed] = useState('km/h')
-	const [precipitation, setPrecipitation] = useState('mm')
-	const [currentMeasurementSystem, setCurrentMeasurementSystem] = useState<'metric' | 'imperial'>('metric')
+	const dispatch = useAppDispatch()
 
-  const dispatch = useAppDispatch()
-
-function toggleCurrentMeasurementSystem() {
+	function toggleCurrentMeasurementSystem() {
 		if (currentMeasurementSystem === 'metric') {
 			// change to imperial
 			setCurrentMeasurementSystem('imperial')
@@ -50,8 +75,8 @@ function toggleCurrentMeasurementSystem() {
 			setWindSpeed('mph')
 			setPrecipitation('in')
 
-      if(temperatureUnit !== 'fahrenheit') {
-        /* These conditions guard against the case where we chose imperial units then switched to imperial.
+			if (temperatureUnit !== 'fahrenheit') {
+				/* These conditions guard against the case where we chose imperial units then switched to imperial.
         Without this condition, on clicking "switch to imperial" the reducer will deal with temperature
         values in fahrenheit as if they were in celsius (since we dispatched an action that will convert 
         the passed temperature data to it as celsius to fahrenheit).
@@ -60,29 +85,29 @@ function toggleCurrentMeasurementSystem() {
         In a nutshell, if the user selected fahrenheit then selected "switch to imperial", the temperature
         should stay the same.
         */
-        dispatch(changeTemperatureUnitToFahrenheit())
-      }
-      if(windSpeed !== 'mph') {
-        dispatch(changeWindSpeedToMph())
-      }
-      if(precipitation !== 'inch') {
-        dispatch(changePrecipitationToInch())
-      }
+				dispatch(changeTemperatureUnitToFahrenheit())
+			}
+			if (windSpeed !== 'mph') {
+				dispatch(changeWindSpeedToMph())
+			}
+			if (precipitation !== 'inch') {
+				dispatch(changePrecipitationToInch())
+			}
 		} else {
 			// change to metric
 			setCurrentMeasurementSystem('metric')
 			setTemperatureUnit('celsius')
 			setWindSpeed('km/h')
 			setPrecipitation('mm')
-      if(temperatureUnit !== ' celsius') {
-        dispatch(changeTemperatureUnitToCelsius())
-      }
-      if(windSpeed !== 'km/h') {
-        dispatch(changeWindSpeedToKmPerHour())
-      }
-      if(precipitation !== 'mm') {
-        dispatch(changePrecipitationToMm())
-      }
+			if (temperatureUnit !== ' celsius') {
+				dispatch(changeTemperatureUnitToCelsius())
+			}
+			if (windSpeed !== 'km/h') {
+				dispatch(changeWindSpeedToKmPerHour())
+			}
+			if (precipitation !== 'mm') {
+				dispatch(changePrecipitationToMm())
+			}
 		}
 	}
 	return (
@@ -99,12 +124,12 @@ function toggleCurrentMeasurementSystem() {
 					className={`hover:bg-neutral-700  p-100 rounded-md w-full text-left cursor-pointer flex justify-between ${
 						temperatureUnit === 'celsius' && 'bg-neutral-700'
 					}`}
-          onClick={() => {
-            if(temperatureUnit !== 'celsius') {
-              setTemperatureUnit('celsius')
-              dispatch(changeTemperatureUnitToCelsius())
-            }
-          }}
+					onClick={() => {
+						if (temperatureUnit !== 'celsius') {
+							setTemperatureUnit('celsius')
+							dispatch(changeTemperatureUnitToCelsius())
+						}
+					}}
 				>
 					Celsius (°C) {temperatureUnit === 'celsius' && <img src={checkmarkIcon} />}
 				</button>
@@ -113,11 +138,11 @@ function toggleCurrentMeasurementSystem() {
 						temperatureUnit === 'fahrenheit' && 'bg-neutral-700'
 					}`}
 					onClick={() => {
-            if(temperatureUnit !== 'fahrenheit') {
-              setTemperatureUnit('fahrenheit')
-              dispatch(changeTemperatureUnitToFahrenheit())
-            }
-          }}
+						if (temperatureUnit !== 'fahrenheit') {
+							setTemperatureUnit('fahrenheit')
+							dispatch(changeTemperatureUnitToFahrenheit())
+						}
+					}}
 				>
 					Fahrenheit (°F) {temperatureUnit === 'fahrenheit' && <img src={checkmarkIcon} />}
 				</button>
@@ -131,10 +156,10 @@ function toggleCurrentMeasurementSystem() {
 						windSpeed === 'km/h' && 'bg-neutral-700'
 					}`}
 					onClick={() => {
-            if(windSpeed !== 'km/h') {
-              setWindSpeed('km/h') 
-              dispatch(changeWindSpeedToKmPerHour())
-            }
+						if (windSpeed !== 'km/h') {
+							setWindSpeed('km/h')
+							dispatch(changeWindSpeedToKmPerHour())
+						}
 					}}
 				>
 					km/h {windSpeed === 'km/h' && <img src={checkmarkIcon} />}
@@ -144,10 +169,10 @@ function toggleCurrentMeasurementSystem() {
 						windSpeed === 'mph' && 'bg-neutral-700'
 					}`}
 					onClick={() => {
-            if(windSpeed !== 'mph') {
-              setWindSpeed('mph') 
-              dispatch(changeWindSpeedToMph())
-            }
+						if (windSpeed !== 'mph') {
+							setWindSpeed('mph')
+							dispatch(changeWindSpeedToMph())
+						}
 					}}
 				>
 					mph {windSpeed === 'mph' && <img src={checkmarkIcon} />}
@@ -162,10 +187,10 @@ function toggleCurrentMeasurementSystem() {
 						precipitation === 'mm' && 'bg-neutral-700'
 					}`}
 					onClick={() => {
-            if(precipitation !== 'mm') {
-              setPrecipitation('mm')
-              dispatch(changePrecipitationToMm())
-            }
+						if (precipitation !== 'mm') {
+							setPrecipitation('mm')
+							dispatch(changePrecipitationToMm())
+						}
 					}}
 				>
 					Millimeters (mm) {precipitation === 'mm' && <img src={checkmarkIcon} />}
@@ -175,10 +200,10 @@ function toggleCurrentMeasurementSystem() {
 						precipitation === 'in' && 'bg-neutral-700'
 					}`}
 					onClick={() => {
-            if(precipitation !== 'in') {
-              setPrecipitation('in')
-              dispatch(changePrecipitationToInch())
-            }
+						if (precipitation !== 'in') {
+							setPrecipitation('in')
+							dispatch(changePrecipitationToInch())
+						}
 					}}
 				>
 					Inches (in) {precipitation === 'in' && <img src={checkmarkIcon} />}
@@ -191,6 +216,10 @@ function toggleCurrentMeasurementSystem() {
 function UnitsDropdown() {
 	const [isUnitsListOpen, setIsUnitsListOpen] = useState(false)
 	const unitsDropdownRef = useRef<null | HTMLDivElement>(null) // solved .contains error!
+	const [temperatureUnit, setTemperatureUnit] = useState('celsius')
+	const [windSpeed, setWindSpeed] = useState('km/h')
+	const [precipitation, setPrecipitation] = useState('mm')
+	const [currentMeasurementSystem, setCurrentMeasurementSystem] = useState<'metric' | 'imperial'>('metric')
 
 	useEffect(() => {
 		function handleClickOutside(e: MouseEvent) {
@@ -214,7 +243,18 @@ function UnitsDropdown() {
 			ref={unitsDropdownRef}
 		>
 			<TriggerButton setIsUnitsListOpen={setIsUnitsListOpen} />
-			{isUnitsListOpen && <UnitsList />}
+			{isUnitsListOpen && (
+				<UnitsList
+					temperatureUnit={temperatureUnit}
+					setTemperatureUnit={setTemperatureUnit}
+					windSpeed={windSpeed}
+					setWindSpeed={setWindSpeed}
+					precipitation={precipitation}
+					setPrecipitation={setPrecipitation}
+					currentMeasurementSystem={currentMeasurementSystem}
+					setCurrentMeasurementSystem={setCurrentMeasurementSystem}
+				/>
+			)}
 		</div>
 	)
 }
